@@ -5,12 +5,13 @@
                 <Row :gutter="20">
                     <Col span="6">
                         <FormItem label="用户名">
-                            <Input v-model="form.user" :maxlength="20"></Input>
+                            <Input v-model="form.realName" :maxlength="20"></Input>
                         </FormItem>
                     </Col>
                     <Col span="6">
                         <FormItem label="角色">
-                            <Select v-model="form.role" filterable>
+                            <Select v-model="form.roleId" filterable>
+                                <Option value="">全部</Option>
                                 <Option v-for="item in roleList" :value="item.id" :key="item.id">{{item.name}}</Option>
                             </Select>
                         </FormItem>
@@ -19,7 +20,8 @@
                 <Row>
                     <Col class="text-right">
                         <FormItem>
-                            <Button type="primary" icon="md-search">查询</Button>
+                            <Button @click="getList()" type="primary" icon="md-search">查询</Button>
+                            <Button @click="handleInfo()" type="primary" icon="md-add">新增</Button>
                         </FormItem>
                     </Col>
                 </Row>
@@ -29,8 +31,9 @@
                     <Tag :color="color[row.status]">{{row.status | STATUS}}</Tag>
                 </template>
                 <template slot-scope="{ row }">
-                    <Button type="primary" size="small">重置密码</Button>
-                    <Button @click="toDetail(row.id)" type="primary" size="small">详情</Button>
+                    <Button @click="handleReset(row.id)" type="primary" size="small">重置密码</Button>
+                    <Button @click="handleInfo(row.id)" type="primary" size="small">修改</Button>
+                    <Button @click="handleDelete(row.id)" type="error" size="small">删除</Button>
                 </template>
             </Table>
             <Page class="self-page" :total="page.totalCount" :current="page.pageNumber" @on-change="getList" show-total/>
@@ -44,8 +47,8 @@ export default {
     data () {
         return {
             form: {
-                user: '',
-                role: ''
+                realName: '',
+                roleId: ''
             },
             roleList: [],
             list: [],
@@ -54,10 +57,13 @@ export default {
                 totalCount: 0
             },
             columns: [
-                { title: '用户名', key: 'name' },
-                { title: '角色', key: 'role' },
+                { title: '用户名', key: 'realName' },
+                { title: '登录名', key: 'loginName' },
+                { title: '角色', key: 'roleName' },
+                { title: '所属机构', key: 'orgName', minWidth: 60 },
+                { title: '手机', key: 'mobile' },
                 { title: '状态', slot: 'status' },
-                { title: '操作', slot: 'default' }
+                { title: '操作', slot: 'default', minWidth: 60 }
             ]
         }
     },
@@ -70,21 +76,49 @@ export default {
     },
     methods: {
         getList (pageNumber = 1) {
-            this.$http.post('/user', this.form).then(res => {
+            this.$http.post('/system/user/list', this.form).then(res => {
                 this.list = res.data.data
                 this.page = res.data.page
             }).catch(() => {})
         },
         getRole () {
-            this.$http.post('/role').then(res => {
+            this.$http.post('/system/role/list').then(res => {
                 this.roleList = res.data.data
             }).catch(() => {})
         },
-        toDetail (id) {
+        handleInfo (id) {
             this.$router.push({
                 name: 'system_auth_user_detail',
                 query: { id },
-                params: { rename: id == 1 ? '设置rename用户' : undefined }
+                params: { rename: id ? '更新用户' : '新增用户' }
+            })
+        },
+        handleReset (id) {
+            this.$Modal.confirm({
+                title: '提示',
+                content: '确认重置密码吗',
+                loading: true,
+                onOk: () => {
+                    this.$http.post('/system/password/reset', {
+                        id
+                    }).then(res => {
+                        this.$Message.success('重置密码成功')
+                    }).catch(() => {}).finally(() => { this.$Modal.remove() })
+                }
+            })
+        },
+        handleDelete (id) {
+            this.$Modal.confirm({
+                title: '提示',
+                content: '确认删除吗',
+                loading: true,
+                onOk: () => {
+                    this.$http.post('/system/user/delete', {
+                        id
+                    }).then(res => {
+                        this.$Message.success('删除成功')
+                    }).catch(() => {}).finally(() => { this.$Modal.remove() })
+                }
             })
         }
     }

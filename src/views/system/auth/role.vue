@@ -82,7 +82,7 @@ export default {
     methods: {
         // 获取所有授权资源列表
         getResourceList () {
-            this.$http.post('/resource').then(res => {
+            this.$http.post('/system/resource/all').then(res => {
                 this.allList = res.data.data
                 this.setResourceList()
             }).catch(() => {})
@@ -121,7 +121,7 @@ export default {
         // 获取角色的授权资源列表
         getRoleMenuList (item, index) {
             this.form = Object.assign(this.form, item)
-            this.$http.post('/resourceByRole', {
+            this.$http.post('/system/resource/role', {
                 id: item.id
             }).then(res => {
                 this.isAdd = false
@@ -156,7 +156,7 @@ export default {
         },
         // 获取角色列表
         getList () {
-            this.$http.post('/role').then(res => {
+            this.$http.post('/system/role/list').then(res => {
                 this.list = res.data.data
             }).catch(() => {})
         },
@@ -175,7 +175,7 @@ export default {
             this.$refs.formValidate.validate(valid => {
                 if (this.treeEmpty) return
                 if (valid) {
-                    let url = this.form.id ? '/editRole' : '/addRole'
+                    let url = this.form.id ? '/system/role/update' : '/system/role/add'
                     this.loading = true
                     this.$http.post(url, {
                         ...this.form,
@@ -197,7 +197,7 @@ export default {
                 content: `确认删除${item.name}吗`,
                 loading: true,
                 onOk: () => {
-                    this.$http.post('/deleteRole', {
+                    this.$http.post('/system/role/delete', {
                         id: item.id
                     }).then(res => {
                         this.getList()

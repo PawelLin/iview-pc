@@ -2,8 +2,8 @@
     <section class="login">
         <Card title="欢迎登录" class="form" shadow>
             <Form ref="form" :model="form" :rules="rules" @keydown.enter.native="submit">
-                <FormItem prop="name" :style="{ marginTop: '8px' }">
-                    <Input v-model="form.name" placeholder="请输入用户名" :maxlength="30">
+                <FormItem prop="loginName" :style="{ marginTop: '8px' }">
+                    <Input v-model="form.loginName" placeholder="请输入用户名" :maxlength="30">
                         <span slot="prepend">
                             <Icon :size="16" type="ios-person"></Icon>
                         </span>
@@ -32,11 +32,11 @@ export default {
     data () {
         return {
             form: {
-                name: '',
+                loginName: '',
                 password: ''
             },
             rules: {
-                name: { required: true, message: '请输入用户名' },
+                loginName: { required: true, message: '请输入用户名' },
                 password: { required: true, message: '请输入密码' }
             }
         }
@@ -50,8 +50,8 @@ export default {
             })
         },
         login () {
-            this.$http.post('/login', {
-                name: this.form.name,
+            this.$http.post('/system/login', {
+                loginName: this.form.loginName,
                 password: rsaEncrypt(this.form.password)
             }).then(res => {
                 localStorage.clear()
@@ -61,7 +61,7 @@ export default {
         },
         setCache (item) {
             setToken(item.token)
-            localStorage.setItem('userName', item.userName)
+            localStorage.setItem('userName', item.realName)
         }
     }
 }

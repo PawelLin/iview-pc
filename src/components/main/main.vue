@@ -55,8 +55,8 @@ export default {
     methods: {
         getMenu () {
             this.$http.post('/menu').then(res => {
-                this.list = res.data.data.menus
-                this.setMenu(res.data.data.menus)
+                this.list = res.data.data.menuList
+                this.setMenu(res.data.data.menuList)
             })
         },
         setMenu (list) {
@@ -77,12 +77,17 @@ export default {
         }
     },
     beforeRouteEnter (to, from, next) {
-        axios.post('/menu', {
+        axios.post('/system/resource/list', {
         }).then(res => {
-            Vue.prototype.$BUTTONS = res.data.data.buttons || []
+            Vue.prototype.$BUTTONS = res.data.data.buttonList || []
             next(vm => {
-                vm.list = res.data.data.menus
-                vm.setMenu(res.data.data.menus)
+                vm.list = res.data.data.menuList.map(item => {
+                    item.title = item.name
+                    item.name = item.url
+                    delete item.url
+                    return item
+                })
+                vm.setMenu(vm.list)
             })
         }).catch(() => {
             Vue.prototype.$BUTTONS = []

@@ -30,11 +30,11 @@ export const getRoutesOfMeta = (obj = {}, list = routes) => {
 /**
  * @param [*] arr
  * @param [*] list
- * @description 获取未设置noCache=true的路由
+ * @description 获取未设置notCache=true的路由
  */
 export const getRoutesOfCache = (arr = [], list = routes) => {
     list.forEach(item => {
-        if (!(item.meta && item.meta.noCache) && item.name) arr.push(item.name)
+        if (!(item.meta && item.meta.notCache) && item.name) arr.push(item.name)
         if (item.children && item.children.length > 0) getRoutesOfCache(arr, item.children)
     })
     return arr

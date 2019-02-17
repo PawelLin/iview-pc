@@ -40,7 +40,7 @@ export default {
             })
         },
         logout () {
-            this.$http.post('/logout', {}).then(res => {
+            this.$http.post('/system/logout', {}).then(res => {
                 this.clearCache()
                 this.$Message.success('退出登录成功')
                 this.$router.push({ name: 'login' })

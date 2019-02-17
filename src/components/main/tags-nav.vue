@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import beforeClose from '@/router/before-close'
 import { objInArr, objNotEqual } from '@/libs/tools'
 import { getRoutesOfMeta } from '@/libs/utils'
@@ -48,8 +49,19 @@ export default {
         return {
             left: 0,
             disWidth: 0,
-            tagList: [],
-            tagMap: null
+            tagMap: null,
+            onlyName: true // tag是否只根据name来判断
+        }
+    },
+    computed: {
+        tagList () {
+            // 首次加载同步tag到store
+            if (!this.$store.state.tag.list.length) {
+                let tagList = localStorage.getItem('tagList')
+                tagList = (tagList && JSON.parse(tagList)) || []
+                this.setTagList(tagList)
+            }
+            return this.$store.state.tag.list
         }
     },
     watch: {
@@ -67,19 +79,21 @@ export default {
             }
         },
         $route (to) {
-            console.log(11)
             this.addTag(to)
         },
         tagList (item) {
+            // 同步store及localstorage
+            this.setTagList(item)
             localStorage.setItem('tagList', JSON.stringify(item))
         }
     },
     created () {
-        let tagList = localStorage.getItem('tagList')
-        this.tagList = (tagList && JSON.parse(tagList)) || []
         this.metaRoutes = getRoutesOfMeta()
     },
     methods: {
+        ...mapMutations([
+            'setTagList'
+        ]),
         toPage (item) {
             this.$router.push({
                 name: item.name,
@@ -95,7 +109,8 @@ export default {
         },
         setActiveTag (item) {
             // this.tagMap[item.name]有值说明是左侧菜单，只需要判断路由name
-            return !objNotEqual(item, this.$route, (this.tagMap && this.tagMap[item.name]) ? ['name'] : ['name', 'query']) ? 'primary' : 'default'
+            let filter = this.tagFilter((this.tagMap && this.tagMap[item.name]) ? ['name'] : ['name', 'query'])
+            return !objNotEqual(item, this.$route, filter) ? 'primary' : 'default'
         },
         addTag (route) {
             if (this.tagMap) {
@@ -104,7 +119,8 @@ export default {
                 let params = {}
                 // 直接访问的页面在tag不在左侧菜单，将路由的params跟本地存储的同步
                 if (!this.tagMap[route.name]) {
-                    let tag = this.tagList.filter(item => !objNotEqual(item, this.$route, ['name', 'query']))[0]
+                    let filter = this.tagFilter(['name', 'query'])
+                    let tag = this.tagList.filter(item => !objNotEqual(item, this.$route, filter))[0]
                     params = (tag && tag.params) || route.params || {}
                     title = (tag && tag.params && tag.params.rename) || title
                 }
@@ -114,7 +130,8 @@ export default {
                         this.tagList.push({ name: this.home.name, title: this.tagMap[this.home.name], params: {}, query: {} })
                     }
                     // this.tagMap[item.name]有值说明是左侧菜单，只需要判断路由name
-                    let tagIndex = objInArr(this.tagList, route, this.tagMap[route.name] ? ['name'] : '')
+                    let filter = this.tagFilter(this.tagMap[route.name] ? ['name'] : '')
+                    let tagIndex = objInArr(this.tagList, route, filter)
                     if (tagIndex === -1) {
                         this.tagList.push(route)
                         this.$nextTick(() => {
@@ -122,7 +139,7 @@ export default {
                         })
                     } else {
                         // 左侧菜单同名不同参数路由切换实时更新本地localstorge
-                        if (this.tagMap[route.name]) this.tagList.splice(tagIndex, 1, route)
+                        if (this.tagMap[route.name] || this.onlyName) this.tagList.splice(tagIndex, 1, route)
                         this.moveItemEnd(tagIndex)
                     }
                 }
@@ -139,21 +156,25 @@ export default {
             }
         },
         removeTag (item, index) {
-            this.tagList.splice(index, 1)
-            if (!objNotEqual(item, this.$route, ['name', 'query', 'params'])) {
-                let pre = this.tagList[index - 1]
+            let filter = this.tagFilter(['name', 'query', 'params'])
+            let list = this.tagList.filter((item, index1) => index1 !== index)
+            this.setTagList(list)
+            if (!objNotEqual(item, this.$route, filter)) {
+                let pre = list[index - 1]
                 this.$router.push({ name: pre.name, query: pre.query, params: pre.params })
             }
         },
         closeAll () {
-            this.tagList = this.tagList.filter(item => item.name === this.home.name)
+            let list = this.tagList.filter(item => item.name === this.home.name)
+            this.setTagList(list)
             this.left = 0
             this.$router.push({ name: this.home.name })
         },
         closeOther () {
-            this.tagList = this.tagList.filter(item => {
+            let list = this.tagList.filter(item => {
                 return item.name === this.$route.name || item.name === this.home.name
             })
+            this.setTagList(list)
             this.left = 0
         },
         moveLeft () {
@@ -171,6 +192,9 @@ export default {
             let left = this.$refs.scrollBody.children[index].offsetLeft + this.$refs.scrollBody.children[index].offsetWidth
             this.disWidth = this.$refs.scrollOuter.offsetWidth - left - 4 // 4 = tag的margin-right
             this.left = this.disWidth > 0 ? 0 : this.disWidth
+        },
+        tagFilter(filter) {
+            return this.onlyName ? ['name'] : filter
         }
     }
 }

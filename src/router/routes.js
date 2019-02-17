@@ -34,7 +34,7 @@ export default [
                 meta: {
                     title: '用户详情',
                     active: 'system_auth_user',
-                    notCache: true
+                    // notCache: true
                 },
                 component: () => import('@/views/system/auth/user/detail.vue')
             },
