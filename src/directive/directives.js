@@ -64,7 +64,12 @@ const directives = {
                         e.target.value = value
                     })
                 }
+                const handleBlur = e => {
+                    e.target.value = parseFloat(e.target.value)
+                    ref.$refs[refInput].handleInput(e)
+                }
                 on(input, 'input', handleInput)
+                on(input, 'blur', handleBlur)
             }
         }
     },

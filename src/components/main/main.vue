@@ -81,12 +81,7 @@ export default {
         }).then(res => {
             Vue.prototype.$BUTTONS = res.data.data.buttonList || []
             next(vm => {
-                vm.list = res.data.data.menuList.map(item => {
-                    item.title = item.name
-                    item.name = item.url
-                    delete item.url
-                    return item
-                })
+                vm.list = res.data.data.menuList
                 vm.setMenu(vm.list)
             })
         }).catch(() => {
