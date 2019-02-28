@@ -33,7 +33,7 @@ export default [
                 name: 'system_auth_user_detail',
                 meta: {
                     title: '用户详情',
-                    active: 'system_auth_user',
+                    active: 'system_auth_user'
                     // notCache: true
                 },
                 component: () => import('@/views/system/auth/user/detail.vue')
@@ -68,5 +68,5 @@ export default [
         path: '*',
         name: 'error_404',
         component: () => import('_c/error/404.vue')
-    },
+    }
 ]

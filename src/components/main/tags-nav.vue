@@ -85,6 +85,8 @@ export default {
             // 同步store及localstorage
             this.setTagList(item)
             localStorage.setItem('tagList', JSON.stringify(item))
+            // 通知main组件动态设置keep-alive includes属性
+            this.$emit('setCache', item.map(ite => ite.name))
         }
     },
     created () {

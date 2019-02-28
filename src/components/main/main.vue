@@ -9,7 +9,7 @@
         </Sider>
         <Layout>
             <header-bar />
-            <tags-nav :home="home" :list="list"/>
+            <tags-nav :home="home" :list="list" @setCache="setCache"/>
             <Content class="content">
                 <keep-alive :include="cacheList">
                     <router-view/>
@@ -50,8 +50,7 @@ export default {
         }
     },
     created () {
-        this.cacheList = getRoutesOfCache()
-        // this.getMenu()
+        this.cacheRoutes = getRoutesOfCache()
     },
     methods: {
         getMenu () {
@@ -75,6 +74,9 @@ export default {
                     this.convertData(item.children, allList)
                 }
             })
+        },
+        setCache (list) {
+            this.cacheList = list.filter(item => this.cacheRoutes.includes(item))
         }
     },
     beforeRouteEnter (to, from, next) {
