@@ -10,7 +10,13 @@
             <Col>
                 <FormItem label="v-number">
                     <span class="desc">限制input只能输入数字</span>
-                    用法：v-number = " [ this, refname ] "
+                    用法：v-number = " [ this, refname, regex ] "
+                </FormItem>
+            </Col>
+            <Col>
+                <FormItem label="v-thousands">
+                    <span class="desc">限制input只能输入数字和逗号，失去焦点自动格式化千分位</span>
+                    用法：v-thousands = " [ this, refname ] "
                 </FormItem>
             </Col>
             <Col>
@@ -32,6 +38,6 @@ export default {
 <style lang="less" scoped>
 .desc {
     display: inline-block;
-    min-width: 200px;
+    min-width: 350px;
 }
 </style>

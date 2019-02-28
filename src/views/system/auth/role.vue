@@ -125,11 +125,7 @@ export default {
                 id: item.id
             }).then(res => {
                 this.isAdd = false
-                let actives = res.data.data.buttons || []
-                res.data.data.menus.forEach(item => {
-                    actives.push(item.name)
-                })
-                this.setActiveMenu(this.resourceList, actives)
+                this.setActiveMenu(this.resourceList, res.data.data.map(item => item.name))
             }).catch(() => {})
         },
         // 设置选中的授权资源

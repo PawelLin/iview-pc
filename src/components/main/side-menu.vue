@@ -79,9 +79,9 @@ export default {
         },
         setMenu (name) {
             if (this.menuMap) {
-                let openNames = this.menuMap[name] || this.menuMap[this.routes[name].active]
+                let openNames = this.menuMap[name] || (this.routes[name] ? this.menuMap[this.routes[name].active] : [])
                 this.openNames = openNames
-                this.activeName = this.menuMap[name] ? name : this.routes[name].active
+                this.activeName = this.menuMap[name] ? name : (this.routes[name] ? this.routes[name].active : '')
                 this.$nextTick(() => {
                     this.$refs.menu.updateOpened()
                     this.$refs.menu.updateActiveName()

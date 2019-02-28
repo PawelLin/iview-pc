@@ -21,6 +21,12 @@
                         <span class="desc">指令：v-money = " [ this, refname, num1, num2 ] "</span>
                     </Col>
                     <Col>
+                        <FormItem label="千分位输入框">
+                            <Input v-model="form.thousands" ref="thousands" v-thousands="[this, 'thousands']" />
+                        </FormItem>
+                        <span class="desc">指令：v-thousands = " [ this, refname] "</span>
+                    </Col>
+                    <Col>
                         <FormItem label="日期">
                             <DatePicker v-model="form.date" type="date" placeholder="选择日期" :options="options"></DatePicker>
                         </FormItem>
@@ -57,6 +63,7 @@
             <p>form.text = {{form.text}}</p>
             <p>form.number = {{form.number}}</p>
             <p>form.money = {{form.money}}</p>
+            <p>form.thousands = {{form.thousands}}</p>
             <p>form.date = {{form.date}}</p>
             <p>form.startDate = {{form.startDate}}</p>
             <p>form.endDate = {{form.endDate}}</p>
@@ -76,6 +83,7 @@ export default {
                 text: '',
                 number: '',
                 money: '',
+                thousands: '',
                 date: '',
                 startDate: '',
                 endDate: '',

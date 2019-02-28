@@ -114,8 +114,8 @@ export default {
         },
         addTag (route) {
             if (this.tagMap) {
-                // 映射值 | 跳转路由定义params的rename值 | 路由配置的值
-                let title = this.tagMap[route.name] || route.params.rename || this.metaRoutes[route.name].title
+                // 映射值 | 跳转路由定义params的rename值 | 路由配置的值 | 后端未返回首页home路由, 设置的值
+                let title = this.tagMap[route.name] || route.params.rename || (this.metaRoutes[route.name] && this.metaRoutes[route.name].title) || this.home.title
                 let params = {}
                 // 直接访问的页面在tag不在左侧菜单，将路由的params跟本地存储的同步
                 if (!this.tagMap[route.name]) {
@@ -127,7 +127,7 @@ export default {
                 if (title) {
                     route = { name: route.name, title, params, query: route.query }
                     if (this.tagList.length === 0 && route.name !== this.home.name) {
-                        this.tagList.push({ name: this.home.name, title: this.tagMap[this.home.name], params: {}, query: {} })
+                        this.tagList.push({ name: this.home.name, title: this.tagMap[this.home.name] || this.home.title, params: {}, query: {} })
                     }
                     // this.tagMap[item.name]有值说明是左侧菜单，只需要判断路由name
                     let filter = this.tagFilter(this.tagMap[route.name] ? ['name'] : '')
@@ -193,7 +193,7 @@ export default {
             this.disWidth = this.$refs.scrollOuter.offsetWidth - left - 4 // 4 = tag的margin-right
             this.left = this.disWidth > 0 ? 0 : this.disWidth
         },
-        tagFilter(filter) {
+        tagFilter (filter) {
             return this.onlyName ? ['name'] : filter
         }
     }

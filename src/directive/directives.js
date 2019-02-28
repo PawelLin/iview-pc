@@ -48,7 +48,8 @@ const directives = {
             }
             if (input) {
                 let ref = binding.value[0]
-                let refInput = binding.value[1]
+                let refValue = binding.value[1]
+                let refInput = ref.$refs[refValue][0] || ref.$refs[refValue]
                 let num1 = binding.value[2] || 9
                 let num2 = binding.value[3] || 2
                 let regExp = new RegExp(`^(0|[1-9]\\d{0,${num1 - 1}})(\\.\\d{0,${num2}})?$`)
@@ -59,14 +60,14 @@ const directives = {
                     } else {
                         value = e.target.value
                     }
-                    ref.$refs[refInput].handleInput(e)
+                    refInput.handleInput(e)
                     ref.$nextTick(() => {
                         e.target.value = value
                     })
                 }
                 const handleBlur = e => {
-                    e.target.value = parseFloat(e.target.value)
-                    ref.$refs[refInput].handleInput(e)
+                    e.target.value = e.target.value && `${parseFloat(e.target.value)}`
+                    refInput.handleInput(e)
                 }
                 on(input, 'input', handleInput)
                 on(input, 'blur', handleBlur)
@@ -81,8 +82,9 @@ const directives = {
             }
             if (input) {
                 let ref = binding.value[0]
-                let refInput = binding.value[1]
-                let regExp = new RegExp(`^(0|[1-9]\\d*)$`)
+                let refValue = binding.value[1]
+                let refInput = ref.$refs[refValue][0] || ref.$refs[refValue]
+                let regExp = binding.value[2] || new RegExp(`^(0|[1-9]\\d*)$`)
                 let value = ''
                 const handleInput = e => {
                     if (e.target.value && !(regExp.test(e.target.value))) {
@@ -90,7 +92,7 @@ const directives = {
                     } else {
                         value = e.target.value
                     }
-                    ref.$refs[refInput].handleInput(e)
+                    refInput.handleInput(e)
                     ref.$nextTick(() => {
                         e.target.value = value
                     })
@@ -99,8 +101,48 @@ const directives = {
             }
         }
     },
+    thousands: {
+        inserted: (el, binding, vnode) => {
+            let input = null
+            for (let i of el.children) {
+                if (i.tagName.toUpperCase() === 'INPUT') input = i
+            }
+            if (input) {
+                let ref = binding.value[0]
+                let refValue = binding.value[1]
+                let refInput = ref.$refs[refValue][0] || ref.$refs[refValue]
+                let regExp = new RegExp(`[^,\\d]`)
+                let value = ''
+                const handleInput = e => {
+                    if (e.target.value && (regExp.test(e.target.value))) {
+                        e.target.value = value
+                    } else {
+                        value = e.target.value
+                    }
+                    refInput.handleInput(e)
+                    ref.$nextTick(() => {
+                        e.target.value = value
+                    })
+                }
+                const handleBlur = e => {
+                    // 显示为千分位，实际值是纯数字，可放开注释
+                    // let val = e.target.value = e.target.value.replace(/,/g, '')
+                    // refInput.handleInput(e)
+                    // ref.$nextTick(() => {
+                    //     e.target.value = value = (val && val.replace(/\d{1,3}(?=(\d{3})+$)/g, '$&,')) || ''
+                    // })
+                    let val = e.target.value.replace(/,/g, '')
+                    e.target.value = value = (val && parseInt(val).toString().replace(/\d{1,3}(?=(\d{3})+$)/g, '$&,')) || ''
+                    refInput.handleInput(e)
+                }
+                on(input, 'input', handleInput)
+                on(input, 'blur', handleBlur)
+            }
+        }
+    },
     maxheight: {
         inserted: (el, binding, vnode) => {
+            el.style.overflow = 'auto'
             el.style.maxHeight = window.innerHeight - binding.value + 'px'
         }
     }

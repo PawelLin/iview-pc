@@ -43,7 +43,8 @@ export default {
             menus: [],
             list: [],
             home: {
-                name: 'home'
+                name: 'home',
+                title: '首页'
             },
             cacheList: []
         }
