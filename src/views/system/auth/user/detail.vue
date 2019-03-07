@@ -54,7 +54,7 @@
                 <Col span="8">
                     <FormItem>
                         <Button @click="handleSubmit" type="primary">提交</Button>
-                        <Button @click="removeTag($route)" type="primary">取消</Button>
+                        <RemoveTag ref="removeTag" />
                     </FormItem>
                 </Col>
             </Row>
@@ -119,7 +119,6 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'removeTag',
             'setData',
             'delData'
         ]),
@@ -152,7 +151,7 @@ export default {
                         id: this.form.id || undefined
                     }).then(res => {
                         this.$Message.success('提交成功')
-                        this.removeTag(this.$route)
+                        this.$refs.removeTag.handleRemove('system_auth_user')
                     }).catch(() => {})
                 }
             })

@@ -11,10 +11,21 @@ export default {
         setTagList (state, list = []) {
             state.list = list
         },
-        removeTag (state, route) {
+        removeTag (state, { route, to }) {
             let tagIndex = objInArr(state.list, route, ['name', 'query', 'params'])
             let { name, params, query } = state.list[tagIndex - 1]
             state.list.splice(tagIndex, 1)
+            if (to) {
+                let toRoute = (JSON.parse(localStorage.getItem('tagList')) || []).filter(item => item.name === to)[0]
+                if (toRoute) {
+                    router.replace({
+                        name: toRoute.name,
+                        params: { ...toRoute.params, activated: true },
+                        query: toRoute.query
+                    })
+                    return
+                }
+            }
             router.replace({ name, params, query })
         }
     },
