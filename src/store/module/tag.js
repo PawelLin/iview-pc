@@ -16,7 +16,7 @@ export default {
             let { name, params, query } = state.list[tagIndex - 1]
             state.list.splice(tagIndex, 1)
             if (to) {
-                let toRoute = (JSON.parse(localStorage.getItem('tagList')) || []).filter(item => item.name === to)[0]
+                let toRoute = state.list.filter(item => item.name === to)[0]
                 if (toRoute) {
                     router.replace({
                         name: toRoute.name,

@@ -79,6 +79,7 @@ export default {
             }
         },
         $route (to) {
+            if (!this.onlyName) this.delData()
             this.addTag(to)
         },
         tagList (item) {
@@ -94,7 +95,8 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'setTagList'
+            'setTagList',
+            'delData'
         ]),
         toPage (item) {
             this.$router.push({

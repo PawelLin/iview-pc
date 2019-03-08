@@ -66,7 +66,7 @@
 import { mapMutations } from 'vuex'
 import { getOrgList } from '@/libs/service'
 export default {
-    name: 'system_auth_user_detail',
+    name: 'auth_user_detail',
     data () {
         return {
             form: {
@@ -93,22 +93,20 @@ export default {
     },
     watch: {
         $route: {
-            handler(to, from) {
-                // let key1 = `${to.name}${to.query.id || ''}`
-                // let key2 = `${from.name}${from.query.id || ''}`
-                // if (from.name === this.name) {
-                //     this.setData({ [key2]: { ...this.form } })
-                // }
-                // if (to.query.id && !this.$store.state.data[key1]) {
-                //     this.getDetail(to.query.id).then(res => {
-                //         this.form = Object.assign(this.form, res.data.data)
-                //     }).catch(() => {})
-                // } else {
-                //     if (!to.query.id) this.$refs.form.resetFields()
-                //     this.form = Object.assign(this.form, this.$store.state.data[key1] || this.initForm)
-                // }
-                // let routes = JSON.parse(localStorage.getItem('tagList')).filter(item => item.name === from.name).map(item => `${item.name}${item.query.id || ''}`)
-                // this.delData(routes)
+            handler (to, from) {
+                let key1 = `${to.name}${to.query.id || ''}`
+                let key2 = `${from.name}${from.query.id || ''}`
+                if (from.name === this.$options.name) {
+                    this.setData({ [key2]: { ...this.form } })
+                }
+                if (to.query.id && !this.$store.state.data[key1]) {
+                    this.getDetail(to.query.id).then(res => {
+                        this.form = Object.assign(this.form, res.data.data)
+                    }).catch(() => {})
+                } else {
+                    if (!to.query.id) this.$refs.form.resetFields()
+                    this.form = Object.assign(this.form, this.$store.state.data[key1] || this.initForm)
+                }
             },
             deep: true
         }
@@ -119,8 +117,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'setData',
-            'delData'
+            'setData'
         ]),
         init (id) {
             let ajax = [getOrgList(), this.getRole()]

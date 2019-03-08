@@ -52,7 +52,7 @@
 </template>
 <script>
 export default {
-    name: 'system_auth_role',
+    name: 'auth_role',
     data () {
         return {
             loading: false,

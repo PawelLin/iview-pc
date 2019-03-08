@@ -43,7 +43,7 @@
 
 <script>
 export default {
-    name: 'system_auth_user',
+    name: 'auth_user',
     data () {
         return {
             form: {

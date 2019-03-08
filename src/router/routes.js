@@ -24,24 +24,24 @@ export default [
                 component: () => import('@/views/Home.vue')
             },
             {
-                path: '/system/auth/user',
-                name: 'system_auth_user',
+                path: '/auth/user',
+                name: 'auth_user',
                 component: () => import('@/views/system/auth/user/list.vue')
             },
             {
-                path: '/system/auth/user/detail',
-                name: 'system_auth_user_detail',
+                path: '/auth/user/detail',
+                name: 'auth_user_detail',
                 meta: {
                     title: '用户详情',
-                    active: 'system_auth_user'
+                    active: 'auth_user'
                     // notCache: true
                 },
-                component: () => import('@/views/system/auth/user/detail.vue')
+                component: () => import('@/views/auth/user/detail.vue')
             },
             {
-                path: '/system/auth/role',
-                name: 'system_auth_role',
-                component: () => import('@/views/system/auth/role.vue'),
+                path: '/auth/role',
+                name: 'auth_role',
+                component: () => import('@/views/auth/role.vue'),
                 meta: {
                     beforeCloseName: 'before_close_normal'
                 }
