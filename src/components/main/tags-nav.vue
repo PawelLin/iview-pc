@@ -86,8 +86,6 @@ export default {
             // 同步store及localstorage
             this.setTagList(item)
             localStorage.setItem('tagList', JSON.stringify(item))
-            // 通知main组件动态设置keep-alive includes属性
-            this.$emit('setCache', item.map(ite => ite.name))
         }
     },
     created () {
@@ -130,7 +128,7 @@ export default {
                 }
                 if (title) {
                     route = { name: route.name, title, params, query: route.query }
-                    if (this.tagList.length === 0 && route.name !== this.home.name) {
+                    if (this.tagList.length === 0 && this.home && route.name !== this.home.name) {
                         this.tagList.push({ name: this.home.name, title: this.tagMap[this.home.name] || this.home.title, params: {}, query: {} })
                     }
                     // this.tagMap[item.name]有值说明是左侧菜单，只需要判断路由name

@@ -6,7 +6,6 @@ export default {
     mutations: {
         setData (state, data = {}) {
             state = Object.assign(state, { ...data })
-            console.log(state)
         },
         delData (state) {
             let routes = JSON.parse(localStorage.getItem('tagList')).map(item => `${item.name}${item.query.id || ''}`)

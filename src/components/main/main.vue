@@ -2,14 +2,16 @@
     <Layout class="layout">
         <Sider v-model="collapsed" collapsible :width="256" class="left-sider" :class="collapsed ? 'left-scroll' : ''">
             <title-bar :collapsed="collapsed" />
-            <side-menu v-show="!collapsed" :menus="menus" :list="list" />
-            <div v-show="collapsed">
-                <collapsed-menu v-for="item in menus" :menu="item" :key="item.url" is-first/>
-            </div>
+            <template v-if="menus.length">
+                <side-menu v-show="!collapsed" :menus="menus" :activeName="activeName" />
+                <div v-show="collapsed">
+                    <collapsed-menu v-for="item in menus" :menu="item" :key="item.url" is-first/>
+                </div>
+            </template>
         </Sider>
         <Layout>
             <header-bar />
-            <tags-nav :home="home" :list="list" @setCache="setCache"/>
+            <tags-nav :home="home" :list="list" />
             <Content class="content">
                 <keep-alive :include="cacheList">
                     <router-view/>
@@ -42,28 +44,34 @@ export default {
             collapsed: false,
             menus: [],
             list: [],
+            activeName: '',
             home: {
                 name: 'home',
                 title: '首页'
-            },
-            cacheList: []
+            }
+        }
+    },
+    computed: {
+        cacheList () {
+            return this.$store.state.tag.list.map(item => item.name).filter(item => this.cacheRoutes.includes(item))
+        }
+    },
+    watch: {
+        $route (route) {
+            this.activeName = route.name
         }
     },
     created () {
+        this.activeName = this.$route.name
         this.cacheRoutes = getRoutesOfCache()
     },
     methods: {
-        getMenu () {
-            this.$http.post('/menu').then(res => {
-                this.list = res.data.data.menuList
-                this.setMenu(res.data.data.menuList)
-            })
-        },
         setMenu (list) {
-            this.menus = list.filter(item => {
+            let menus = list.filter(item => {
                 return item.parentId === 0
             })
-            this.convertData(this.menus, list)
+            this.convertData(menus, list)
+            this.menus = menus
         },
         convertData (list, allList) {
             list.forEach(item => {
@@ -74,9 +82,6 @@ export default {
                     this.convertData(item.children, allList)
                 }
             })
-        },
-        setCache (list) {
-            this.cacheList = list.filter(item => this.cacheRoutes.includes(item))
         }
     },
     beforeRouteEnter (to, from, next) {

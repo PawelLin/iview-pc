@@ -21,7 +21,7 @@
                     <Col class="text-right">
                         <FormItem>
                             <Button @click="getList()" type="primary" icon="md-search">查询</Button>
-                            <Button @click="handleInfo()" type="primary" icon="md-add">新增</Button>
+                            <Button v-if="AUTH('user_add')" @click="handleInfo()" type="primary" icon="md-add">新增</Button>
                         </FormItem>
                     </Col>
                 </Row>
@@ -88,7 +88,7 @@ export default {
         },
         handleInfo (id) {
             this.$router.push({
-                name: 'system_auth_user_detail',
+                name: 'auth_user_detail',
                 query: { id },
                 params: { rename: id ? '更新用户' : '新增用户' }
             })

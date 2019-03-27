@@ -26,7 +26,7 @@ export default [
             {
                 path: '/auth/user',
                 name: 'auth_user',
-                component: () => import('@/views/system/auth/user/list.vue')
+                component: () => import('@/views/auth/user/list.vue')
             },
             {
                 path: '/auth/user/detail',
