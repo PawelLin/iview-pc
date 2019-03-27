@@ -19,5 +19,23 @@ export default [
         path: '/demo/directives',
         name: 'demo_directives',
         component: () => import('_c/demo/directives.vue')
+    },
+    {
+        path: '/demo/tags',
+        name: 'demo_tags',
+        component: () => import('_c/demo/tags/list.vue')
+    },
+    {
+        path: '/demo/tags/detail',
+        name: 'demo_tags_detail',
+        meta: {
+            active: 'demo_tags'
+        },
+        component: () => import('_c/demo/tags/tags.vue')
+    },
+    {
+        path: '/demo/css',
+        name: 'demo_css',
+        component: () => import('_c/demo/css.vue')
     }
 ]

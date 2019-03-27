@@ -21,7 +21,7 @@
                     <Col class="text-right">
                         <FormItem>
                             <Button @click="getList()" type="primary" icon="md-search">查询</Button>
-                            <Button v-if="AUTH('user_add')" @click="handleInfo()" type="primary" icon="md-add">新增</Button>
+                            <Button v-if="AUTH('user_add')" @click="handleInfo('auth_user_add')" type="primary" icon="md-add">新增</Button>
                         </FormItem>
                     </Col>
                 </Row>
@@ -32,7 +32,7 @@
                 </template>
                 <template slot-scope="{ row }">
                     <Button @click="handleReset(row.id)" type="primary" size="small">重置密码</Button>
-                    <Button @click="handleInfo(row.id)" type="primary" size="small">修改</Button>
+                    <Button @click="handleInfo('auth_user_edit', row.id)" type="primary" size="small">修改</Button>
                     <Button @click="handleDelete(row.id)" type="error" size="small">删除</Button>
                 </template>
             </Table>
@@ -86,11 +86,10 @@ export default {
                 this.roleList = res.data.data
             }).catch(() => {})
         },
-        handleInfo (id) {
+        handleInfo (name, id) {
             this.$router.push({
-                name: 'auth_user_detail',
-                query: { id },
-                params: { rename: id ? '更新用户' : '新增用户' }
+                name,
+                query: { id }
             })
         },
         handleReset (id) {

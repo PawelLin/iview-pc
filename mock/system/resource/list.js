@@ -13,6 +13,8 @@ setTimeout(
                     { id: 32, parentId: 3, title: '自定义组件', icon: 'ios-flower', name: 'demo_component' },
                     { id: 33, parentId: 3, title: '自定义过滤器', icon: 'ios-color-filter', name: 'demo_filters' },
                     { id: 34, parentId: 3, title: '自定义指令', icon: 'ios-color-filter', name: 'demo_directives' },
+                    { id: 35, parentId: 3, title: '两种TAG', icon: 'ios-color-filter', name: 'demo_tags' },
+                    { id: 36, parentId: 3, title: '自定义公共样式', icon: 'ios-color-filter', name: 'demo_css' },
                 ],
                 buttonList: ['user_add']
             }

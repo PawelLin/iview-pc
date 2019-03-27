@@ -118,3 +118,12 @@ export const numberFormat = (str, fixed) => {
     })
     return _numberVal >= 0 ? value : '-' + value
 }
+
+/**
+ * @description 只合并对象拥有的属性 assignHas(obj1, obj2)
+ */
+export const assignHas = (obj1 = {}, obj2 = {}) => {
+    Object.keys(obj2).forEach(key => {
+        if (obj1.hasOwnProperty(key)) obj1[key] = obj2[key]
+    })
+}

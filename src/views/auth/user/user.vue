@@ -91,28 +91,14 @@ export default {
             }
         }
     },
-    watch: {
-        $route: {
-            handler (to, from) {
-                let key1 = `${to.name}${to.query.id || ''}`
-                let key2 = `${from.name}${from.query.id || ''}`
-                if (from.name === this.$options.name) {
-                    this.setData({ [key2]: { ...this.form } })
-                }
-                if (to.query.id && !this.$store.state.data[key1]) {
-                    this.getDetail(to.query.id).then(res => {
-                        this.form = Object.assign(this.form, res.data.data)
-                    }).catch(() => {})
-                } else {
-                    if (!to.query.id) this.$refs.form.resetFields()
-                    this.form = Object.assign(this.form, this.$store.state.data[key1] || this.initForm)
-                }
-            },
-            deep: true
+    activated () {
+        if (this.form.id && this.$route.query.id !== this.form.id) {
+            this.getDetail(this.form.id).then(res => {
+                this.form = Object.assign(this.form, res.data.data)
+            }).catch(() => {})
         }
     },
     created () {
-        this.initForm = { ...this.form }
         this.init(this.$route.query.id)
     },
     methods: {
@@ -126,12 +112,9 @@ export default {
                 this.orgList = res[0].data.data
                 this.roleList = res[1].data.data
                 if (id) this.form = Object.assign(this.form, res[2].data.data)
-                else {
-                    this.$nextTick(() => {
-                        this.$refs.form.resetFields()
-                    })
-                }
-            }).catch(() => {})
+            }).catch(() => {}).finally(() => {
+                this.form.id = id || ''
+            })
         },
         getRole () {
             return this.$http.post('/system/role/list')

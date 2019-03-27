@@ -29,14 +29,24 @@ export default [
                 component: () => import('@/views/auth/user/list.vue')
             },
             {
-                path: '/auth/user/detail',
-                name: 'auth_user_detail',
+                path: '/auth/user/add',
+                name: 'auth_user_add',
                 meta: {
-                    title: '用户详情',
+                    title: '用户新增',
                     active: 'auth_user'
                     // notCache: true
                 },
-                component: () => import('@/views/auth/user/detail.vue')
+                component: () => import('@/views/auth/user/add.vue')
+            },
+            {
+                path: '/auth/user/edit',
+                name: 'auth_user_edit',
+                meta: {
+                    title: '用户编辑',
+                    active: 'auth_user'
+                    // notCache: true
+                },
+                component: () => import('@/views/auth/user/edit.vue')
             },
             {
                 path: '/auth/role',
