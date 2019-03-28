@@ -1,7 +1,7 @@
 <template>
-    <Form :label-width="100">
+    <Form :label-width="120">
         <Row :gutter="20">
-            <Col span="8">
+            <Col span="12">
                 <Card title="全局样式" dis-hover>
                     <Row>
                         <Col>
@@ -22,7 +22,7 @@
                     </Row>
                 </Card>
             </Col>
-            <Col span="8">
+            <Col span="12">
                 <Card title="iview样式覆盖" dis-hover>
                     <Row>
                         <Col>
@@ -37,8 +37,6 @@
                         </Col>
                     </Row>
                 </Card>
-            </Col>
-            <Col span="8">
             </Col>
         </Row>
     </Form>

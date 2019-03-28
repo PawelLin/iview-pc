@@ -12,7 +12,7 @@
                         <FormItem label="数字输入框">
                             <Input v-model="form.number" ref="number" v-number="[this, 'number']" :maxlength="10" />
                         </FormItem>
-                        <span class="desc">指令：v-number = " [ this, refname ] "</span>
+                        <span class="desc">指令：v-number = " [ this, refname, regex ] "</span>
                     </Col>
                     <Col>
                         <FormItem label="金额输入框">

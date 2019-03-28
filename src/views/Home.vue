@@ -1,5 +1,16 @@
 <template>
     <div class="home text-center">
+        <Start /><br>
+        <Start :nums="0.5" /><br>
+        <Start :nums="1" /><br>
+        <Start :nums="1.5" /><br>
+        <Start :nums="2" /><br>
+        <Start :nums="2.5" /><br>
+        <Start :nums="3" /><br>
+        <Start :nums="3.5" /><br>
+        <Start :nums="4" /><br>
+        <Start :nums="4.5" /><br>
+        <Start :nums="5" /><br>
         <img alt="Vue logo" src="../assets/logo.png">
         <div>
             <Button @click="updatePwd">修改密码</Button>
@@ -14,11 +25,13 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import showUpdatePwd from '_c/main/update-pwd'
+import Start from '_c/start.vue'
 
 export default {
     name: 'home',
     components: {
-        HelloWorld
+        HelloWorld,
+        Start
     },
     created () {
         let ss = '(([1-9]?\\d|1\\d{2})|2[0-4]\\d|25[0-5])'

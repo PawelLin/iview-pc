@@ -37,5 +37,10 @@ export default [
         path: '/demo/css',
         name: 'demo_css',
         component: () => import('_c/demo/css.vue')
+    },
+    {
+        path: '/demo/tools',
+        name: 'demo_tools',
+        component: () => import('_c/demo/tools.vue')
     }
 ]
