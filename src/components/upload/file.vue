@@ -1,5 +1,7 @@
 <template>
     <div class="ivu-upload ivu-upload-select" @click="handleClick">
+        <!-- 模拟Input组件的必填 -->
+        <Input :value="value" disabled style="display: none;"></Input>
         <input ref="input" type="file" class="ivu-upload-input" @change="handleChange" :multiple="multiple">
         <Button :type="type" icon="md-cloud-upload" :size="btnSize"><slot>点击上传</slot></Button>
     </div>
@@ -9,6 +11,10 @@
 export default {
     name: 'FileUpload',
     props: {
+        value: {
+            type: String,
+            default: ''
+        },
         type: {
             type: String,
             default: 'default'
@@ -59,17 +65,3 @@ export default {
     }
 }
 </script>
-
-<style lang="less" scoped>
-.file-contain /deep/ {
-    .ivu-tag {
-        position: relative;
-        padding-right: 20px;
-        /deep/ i {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-        }
-    }
-}
-</style>

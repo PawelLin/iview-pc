@@ -32,11 +32,11 @@
                 </template>
                 <template slot-scope="{ row }">
                     <Button @click="handleReset(row.id)" type="primary" size="small">重置密码</Button>
-                    <Button @click="handleInfo('auth_user_edit', row.id)" type="primary" size="small">修改</Button>
+                    <Button @click="handleInfo('auth_user_edit', row.id)" type="primary" size="small">编辑</Button>
                     <Button @click="handleDelete(row.id)" type="error" size="small">删除</Button>
                 </template>
             </Table>
-            <Page class="self-page" :total="page.totalCount" :current="page.pageNumber" @on-change="getList" show-total/>
+            <Page class="self-page" :total="page.totalCount" :current.sync="page.pageNumber" @on-change="getList" show-total/>
         </Card>
     </section>
 </template>
@@ -69,6 +69,11 @@ export default {
     },
     beforeCreate () {
         this.color = { '0': 'green', '1': 'red', '2': 'orange' }
+    },
+    activated () {
+        if (this.$route.params.activated) {
+            this.getList(this.page.pageNumber)
+        }
     },
     created () {
         this.getList()

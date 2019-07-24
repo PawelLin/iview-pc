@@ -6,7 +6,7 @@
  *  beforeCloseName: (-) 设置该字段，则在关闭当前tab页时会去'@/router/before-close.js'里寻找该字段名对应的方法，作为关闭前的钩子函数
  * }
  */
-import demoRoutes from './demo'
+
 export default [
     {
         path: '/login',
@@ -56,7 +56,7 @@ export default [
                     beforeCloseName: 'before_close_normal'
                 }
             },
-            ...demoRoutes
+            ...process.env.NODE_ENV === 'development' ? require('./demo').default : []
         ]
     },
     {

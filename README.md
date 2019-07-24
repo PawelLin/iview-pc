@@ -6,8 +6,8 @@
 
 # iview-pc
 
-[![vue](https://img.shields.io/badge/vue-2.5.21-brightgreen.svg?style=flat-square)](https://github.com/vuejs/vue)
-[![iview ui](https://img.shields.io/badge/iview-3.2.2-brightgreen.svg?style=flat-square)](https://github.com/iview/iview)
+[![vue](https://img.shields.io/badge/vue-2.6.10-brightgreen.svg?style=flat-square)](https://github.com/vuejs/vue)
+[![iview ui](https://img.shields.io/badge/iview-3.4.2-brightgreen.svg?style=flat-square)](https://github.com/iview/iview)
 
 [在线访问](https://admin.iviewui.com/)
 

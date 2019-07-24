@@ -2,13 +2,17 @@
     <Form ref="formValidate" :model="form" :rules="rules" :label-width="100" label-position="left" inline>
         <Row>
             <Col>
-                <FormItem label="文件上传" prop="file">
-                    <FileUpload v-model="form.file" @change="uploadFile" :files="['xls', 'xlsx']"></FileUpload>
+                <FormItem label="文件上传" prop="fileName">
+                    <FileUpload v-model="form.fileName" @change="uploadFile" :files="['xls', 'xlsx']"></FileUpload>
+                    <Tag v-show="form.fileName" style="margin-left:10px;cursor: default;">{{form.fileName | shortName(16, form.fileType)}}{{form.fileType}}</Tag>
                 </FormItem>
             </Col>
             <Col>
-                <FormItem label="多文件上传" prop="files">
-                    <FileUpload v-model="form.files" @change="uploadFiles" :files="['xls', 'xlsx', 'txt']" multiple></FileUpload>
+                <FormItem label="多文件上传" prop="filesName">
+                    <FileUpload v-model="form.filesName" @change="uploadFiles" :files="['xls', 'xlsx', 'txt']" multiple></FileUpload>
+                    <Tag v-for="item in form.filesTags" :key="`${item.name}${item.type}`" style="margin-left:10px;cursor: default;">
+                        {{item.name | shortName(16, item.type)}}{{item.type}}
+                    </Tag>
                 </FormItem>
             </Col>
             <Col>
@@ -30,8 +34,8 @@
 </template>
 
 <script>
-import InputSelect from '_c/input/select.vue'
-import FileUpload from '_c/upload/file.vue'
+import InputSelect from '@/components/input/select.vue'
+import FileUpload from '@/components/upload/file.vue'
 export default {
     name: 'demo_component',
     components: {
@@ -42,7 +46,11 @@ export default {
         return {
             form: {
                 file: '',
+                fileName: '',
+                fileType: '',
                 files: '',
+                filesName: '',
+                filesTags: [],
                 select: ''
             },
             list: [
@@ -52,23 +60,31 @@ export default {
                 { id: '41', name: '角色4' }
             ],
             rules: {
-                file: { required: true },
-                files: { required: true },
-                select: { required: true }
+                fileName: { required: true, message: '请选择文件' },
+                filesName: { required: true, message: '请选择文件' },
+                select: { required: true, message: '请选择' }
             }
         }
     },
     methods: {
         uploadFile (files) {
             let formData = new FormData()
-            // let fileName = files[0].name
+            this.form.fileName = files[0].name
+            this.form.fileType = files[0].name.substr(files[0].name.lastIndexOf('.'))
             formData.append('file', files[0])
-            this.$http.post('/uploadFile', formData).then(res => {
-                this.$Message.success('上传成功')
-            }).catch(() => {})
+            // this.$http.post('/uploadFile', formData).then(res => {
+            //     this.$Message.success('上传成功')
+            // }).catch(() => {})
         },
         uploadFiles (files) {
-            console.log(files)
+            this.form.filesTags = []
+            this.form.filesName = ''
+            let formData = new FormData()
+            for (let i = 0; i < files.length; i++) {
+                this.form.filesName += files[i].name
+                formData.append('file', files[i], files[i].name)
+                this.form.filesTags.push({ name: files[i].name, type: files[i].name.substr(files[i].name.lastIndexOf('.')) })
+            }
         },
         handleSubmit () {
             this.$refs.formValidate.validate(valid => {

@@ -131,7 +131,7 @@ export default {
                         id: this.form.id || undefined
                     }).then(res => {
                         this.$Message.success('提交成功')
-                        this.$refs.removeTag.handleRemove('system_auth_user')
+                        this.$refs.removeTag.handleRemove('auth_user')
                     }).catch(() => {})
                 }
             })

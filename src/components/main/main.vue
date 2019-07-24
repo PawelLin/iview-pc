@@ -111,6 +111,7 @@ export default {
     /deep/ .ivu-layout-sider-children {
         margin-right: -18px;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
 }
 .left-scroll {

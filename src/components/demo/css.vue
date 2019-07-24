@@ -35,6 +35,11 @@
                                 <span class="desc">相邻Button间距为5px</span>
                             </FormItem>
                         </Col>
+                        <Col>
+                            <FormItem label=".ivu-form-item-error input[type=file] + .ivu-btn">
+                                <span class="desc">Form包含设置了prop的FileUpload，必填样式定义</span>
+                            </FormItem>
+                        </Col>
                     </Row>
                 </Card>
             </Col>

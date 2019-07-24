@@ -3,6 +3,7 @@ setTimeout(
         next(null, {
             code: '0000',
             data: [
+                { id: 1, parentId: 0, title: '首页', icon: 'md-settings', name: 'home' },
                 { id: 2, parentId: 0, title: '系统管理', icon: 'md-settings', name: 'system' },
                 { id: 21, parentId: 2, title: '权限管理', icon: 'ios-people', name: 'system_auth' },
                 { id: 211, parentId: 21, title: '用户管理', icon: 'ios-person', name: 'system_auth_user' },

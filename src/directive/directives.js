@@ -47,30 +47,32 @@ const directives = {
                 if (i.tagName.toUpperCase() === 'INPUT') input = i
             }
             if (input) {
-                let ref = binding.value[0]
-                let refValue = binding.value[1]
-                let refInput = ref.$refs[refValue][0] || ref.$refs[refValue]
-                let num1 = binding.value[2] || 9
-                let num2 = binding.value[3] || 2
+                let num1 = (binding.value && binding.value[0]) || 9
+                let num2 = (binding.value && binding.value[1]) || 2
                 let regExp = new RegExp(`^(0|[1-9]\\d{0,${num1 - 1}})(\\.\\d{0,${num2}})?$`)
+                let regExp1 = new RegExp(`^9{${num1}}\\.$`)
                 let value = ''
                 const handleInput = e => {
-                    if (e.target.value && !(regExp.test(e.target.value))) {
+                    if (e.target.value && (!(regExp.test(e.target.value)) || regExp1.test(e.target.value))) {
                         e.target.value = value
                     } else {
                         value = e.target.value
                     }
-                    refInput.handleInput(e)
-                    ref.$nextTick(() => {
+                    vnode.componentInstance.$emit('input', value)
+                    vnode.componentInstance.$nextTick(() => {
                         e.target.value = value
                     })
                 }
                 const handleBlur = e => {
                     e.target.value = e.target.value && `${parseFloat(e.target.value)}`
-                    refInput.handleInput(e)
+                    vnode.componentInstance.$emit('input', e.target.value)
+                }
+                const handleFocus = e => { // 同步value
+                    value = e.target.value
                 }
                 on(input, 'input', handleInput)
                 on(input, 'blur', handleBlur)
+                on(input, 'focus', handleFocus)
             }
         }
     },
@@ -81,10 +83,7 @@ const directives = {
                 if (i.tagName.toUpperCase() === 'INPUT') input = i
             }
             if (input) {
-                let ref = binding.value[0]
-                let refValue = binding.value[1]
-                let refInput = ref.$refs[refValue][0] || ref.$refs[refValue]
-                let regExp = binding.value[2] || new RegExp(`^(0|[1-9]\\d*)$`)
+                let regExp = binding.value || new RegExp(`^(0|[1-9]\\d*)$`)
                 let value = ''
                 const handleInput = e => {
                     if (e.target.value && !(regExp.test(e.target.value))) {
@@ -92,12 +91,16 @@ const directives = {
                     } else {
                         value = e.target.value
                     }
-                    refInput.handleInput(e)
-                    ref.$nextTick(() => {
+                    vnode.componentInstance.$emit('input', value)
+                    vnode.componentInstance.$nextTick(() => {
                         e.target.value = value
                     })
                 }
+                const handleFocus = e => { // 同步value
+                    value = e.target.value
+                }
                 on(input, 'input', handleInput)
+                on(input, 'focus', handleFocus)
             }
         }
     },
@@ -108,35 +111,37 @@ const directives = {
                 if (i.tagName.toUpperCase() === 'INPUT') input = i
             }
             if (input) {
-                let ref = binding.value[0]
-                let refValue = binding.value[1]
-                let refInput = ref.$refs[refValue][0] || ref.$refs[refValue]
                 let regExp = new RegExp(`[^,\\d]`)
+                let regExp1 = new RegExp('^0\\d|,$')
                 let value = ''
                 const handleInput = e => {
-                    if (e.target.value && (regExp.test(e.target.value))) {
+                    if (e.target.value && ((regExp.test(e.target.value)) || regExp1.test(e.target.value))) {
                         e.target.value = value
                     } else {
                         value = e.target.value
                     }
-                    refInput.handleInput(e)
-                    ref.$nextTick(() => {
+                    vnode.componentInstance.$emit('input', value)
+                    vnode.componentInstance.$nextTick(() => {
                         e.target.value = value
                     })
                 }
                 const handleBlur = e => {
-                    // 显示为千分位，实际值是纯数字，可放开注释
-                    // let val = e.target.value = e.target.value.replace(/,/g, '')
-                    // refInput.handleInput(e)
-                    // ref.$nextTick(() => {
-                    //     e.target.value = value = (val && val.replace(/\d{1,3}(?=(\d{3})+$)/g, '$&,')) || ''
-                    // })
                     let val = e.target.value.replace(/,/g, '')
-                    e.target.value = value = (val && parseInt(val).toString().replace(/\d{1,3}(?=(\d{3})+$)/g, '$&,')) || ''
-                    refInput.handleInput(e)
+                    let valFormat = (val && val.replace(/\d{1,3}(?=(\d{3})+$)/g, '$&,')) || ''
+                    if (binding.value === 'number') {
+                        vnode.componentInstance.$emit('input', val)
+                        e.target.value = value = valFormat
+                    } else {
+                        e.target.value = value = valFormat
+                        vnode.componentInstance.$emit('input', value)
+                    }
+                }
+                const handleFocus = e => { // 同步value
+                    value = e.target.value
                 }
                 on(input, 'input', handleInput)
                 on(input, 'blur', handleBlur)
+                on(input, 'focus', handleFocus)
             }
         }
     },

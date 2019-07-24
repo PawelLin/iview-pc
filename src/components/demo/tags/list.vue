@@ -2,11 +2,11 @@
     <section>
         <Alert>
             第一种：每个tag只存在一个
-            <template slot="desc">在/components/main/tags-nav.vue内设置onlyName=<font>true</font>，即新增tag时只针对路由的<font>name</font>值过滤，demo见用户管理，注：需先设置好onleName=true</template>
+            <template slot="desc">在/components/main/tags-nav.vue内设置onlyName=<font>true</font>，即新增tag时只针对路由的<font>name</font>值过滤，demo见用户管理，注：需先前往<font>@/components/main/tags-nav.vue</font>设置好<font>onlyName=true</font></template>
         </Alert>
         <Alert>
             第二种：除了左侧菜单的tag，其他tag可存在多个
-            <template slot="desc">在/components/main/tags-nav.vue内设置onlyName=<font>false</font>，即新增tag时针对路由的<font>name, query, params</font>值过滤，demo见下方示例，注：需先设置好onleName=false</template>
+            <template slot="desc">在/components/main/tags-nav.vue内设置onlyName=<font>false</font>，即新增tag时针对路由的<font>name, query, params</font>值过滤，demo见下方示例，注：需先前往<font>@/components/main/tags-nav.vue</font>设置好<font>onlyName=false</font></template>
         </Alert>
         <Card title="多tag示例" dis-hover>
             <Table :columns="columns" :data="list" border size="small">

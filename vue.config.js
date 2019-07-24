@@ -1,4 +1,5 @@
 const path = require('path')
+const WebpackScpPlugin = require('./plugins/webpack-scp-plugin')
 const resolve = dir => {
     return path.join(__dirname, dir)
 }
@@ -6,7 +7,7 @@ const resolve = dir => {
 const BASE_URL = process.env.NODE_ENV === 'development' ? '/' : '/boss/page'
 
 const config = {
-    baseUrl: BASE_URL,
+    publicPath: BASE_URL,
     lintOnSave: false,
     css: {
         loaderOptions: {

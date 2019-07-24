@@ -10,21 +10,27 @@
                     </Col>
                     <Col>
                         <FormItem label="数字输入框">
-                            <Input v-model="form.number" ref="number" v-number="[this, 'number']" :maxlength="10" />
+                            <Input v-model="form.number" v-number :maxlength="10" />
                         </FormItem>
-                        <span class="desc">指令：v-number = " [ this, refname, regex ] "</span>
+                        <span class="desc">指令：v-number</span>
                     </Col>
                     <Col>
                         <FormItem label="金额输入框">
-                            <Input v-model="form.money" ref="money" v-money="[this, 'money']" />
+                            <Input v-model="form.money" v-money="[9, 2]" />
                         </FormItem>
-                        <span class="desc">指令：v-money = " [ this, refname, num1, num2 ] "</span>
+                        <span class="desc">指令：v-money = " [ num1, num2 ] "</span>
                     </Col>
                     <Col>
                         <FormItem label="千分位输入框">
-                            <Input v-model="form.thousands" ref="thousands" v-thousands="[this, 'thousands']" />
+                            <Input v-model="form.thousands" v-thousands />
                         </FormItem>
-                        <span class="desc">指令：v-thousands = " [ this, refname] "</span>
+                        <span class="desc">指令：v-thousands</span>
+                    </Col>
+                    <Col>
+                        <FormItem label="千分位输入框">
+                            <Input v-model="form.thousandsNum" v-thousands="'number'" />
+                        </FormItem>
+                        <span class="desc">指令：v-thousands = " 'number' "</span>
                     </Col>
                     <Col>
                         <FormItem label="日期">
@@ -64,6 +70,7 @@
             <p>form.number = {{form.number}}</p>
             <p>form.money = {{form.money}}</p>
             <p>form.thousands = {{form.thousands}}</p>
+            <p>form.thousandsNum = {{form.thousandsNum}}</p>
             <p>form.date = {{form.date}}</p>
             <p>form.startDate = {{form.startDate}}</p>
             <p>form.endDate = {{form.endDate}}</p>
@@ -81,9 +88,10 @@ export default {
         return {
             form: {
                 text: '',
-                number: '',
-                money: '',
-                thousands: '',
+                number: '0',
+                money: '0',
+                thousands: '0',
+                thousandsNum: '0',
                 date: '',
                 startDate: '',
                 endDate: '',

@@ -127,3 +127,12 @@ export const assignHas = (obj1 = {}, obj2 = {}) => {
         if (obj1.hasOwnProperty(key)) obj1[key] = obj2[key]
     })
 }
+
+/**
+ * @description 字符串长度超过num缩略显示 shortName(name, num, repName)
+ */
+export const shortName = (name, num = 16, repName = '') => {
+    name = name.replace(repName, '')
+    let len = name.length
+    return len > num ? name.substr(0, 14) + '...' + name.substr(len - 2, len) : name
+}
