@@ -13,6 +13,7 @@ const importDirective = Vue => {
     Vue.directive('money', directive.money)
     Vue.directive('number', directive.number)
     Vue.directive('thousands', directive.thousands)
+    Vue.directive('thousandsAuto', directive.thousandsAuto)
     Vue.directive('maxheight', directive.maxheight)
 }
 

@@ -39,7 +39,7 @@ const config = {
 if (process.env.npm_config_proxydev) {
     config.devServer.proxy = {
         '/mock': {
-            target: 'http://localhost:8081',
+            target: 'http://localhost:8989',
             changeOrigin: true,
             pathRewrite: {
                 '^/mock': ''

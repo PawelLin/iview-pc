@@ -33,6 +33,18 @@
                         <span class="desc">指令：v-thousands = " 'number' "</span>
                     </Col>
                     <Col>
+                        <FormItem label="千分位输入框">
+                            <Input v-model="form.thousandsAuto" v-thousands-auto :maxlength="20"/>
+                        </FormItem>
+                        <span class="desc">指令：v-thousands-auto</span>
+                    </Col>
+                    <Col>
+                        <FormItem label="千分位输入框">
+                            <Input v-model="form.thousandsAutoNum" v-thousands-auto="'number'" />
+                        </FormItem>
+                        <span class="desc">指令：v-thousands-auto = " 'number' "</span>
+                    </Col>
+                    <Col>
                         <FormItem label="日期">
                             <DatePicker v-model="form.date" type="date" placeholder="选择日期" :options="options"></DatePicker>
                         </FormItem>
@@ -71,6 +83,8 @@
             <p>form.money = {{form.money}}</p>
             <p>form.thousands = {{form.thousands}}</p>
             <p>form.thousandsNum = {{form.thousandsNum}}</p>
+            <p>form.thousandsAuto = {{form.thousandsAuto}}</p>
+            <p>form.thousandsAutoNum = {{form.thousandsAutoNum}}</p>
             <p>form.date = {{form.date}}</p>
             <p>form.startDate = {{form.startDate}}</p>
             <p>form.endDate = {{form.endDate}}</p>
@@ -82,6 +96,7 @@
 </template>
 
 <script>
+import { setTimeout } from 'timers'
 export default {
     name: 'demo_input',
     data () {
@@ -92,6 +107,8 @@ export default {
                 money: '0',
                 thousands: '0',
                 thousandsNum: '0',
+                thousandsAuto: '0123456',
+                thousandsAutoNum: '0123456',
                 date: '',
                 startDate: '',
                 endDate: '',
@@ -118,6 +135,12 @@ export default {
         options4 () {
             return { disabledDate: date => date && (date.valueOf() < ((this.form.startDate1 && this.form.startDate1.valueOf()) || (Date.now() - 86400000))) }
         }
+    },
+    created () {
+        setTimeout(() => {
+            this.form.thousandsAuto = '123456789.01'
+            this.form.thousandsAutoNum = '123456789.01'
+        }, 1000)
     }
 }
 </script>
