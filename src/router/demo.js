@@ -44,6 +44,11 @@ export default [
         component: () => import('_c/demo/tools.vue')
     },
     {
+        path: '/demo/service',
+        name: 'demo_service',
+        component: () => import('_c/demo/service.vue')
+    },
+    {
         path: '/demo/logs',
         name: 'demo_logs',
         component: () => import('_c/demo/logs.vue')

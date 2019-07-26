@@ -1,7 +1,7 @@
 <template>
     <Row>
         <Col span="14">
-            <Form :label-width="100" inline>
+            <Form :label-width="110" inline>
                 <Row>
                     <Col>
                         <FormItem label="文本输入框">
@@ -33,13 +33,13 @@
                         <span class="desc">指令：v-thousands = " 'number' "</span>
                     </Col>
                     <Col>
-                        <FormItem label="千分位输入框">
+                        <FormItem label="千分位格式输入框">
                             <Input v-model="form.thousandsAuto" v-thousands-auto :maxlength="20"/>
                         </FormItem>
                         <span class="desc">指令：v-thousands-auto</span>
                     </Col>
                     <Col>
-                        <FormItem label="千分位输入框">
+                        <FormItem label="千分位格式输入框">
                             <Input v-model="form.thousandsAutoNum" v-thousands-auto="'number'" />
                         </FormItem>
                         <span class="desc">指令：v-thousands-auto = " 'number' "</span>
