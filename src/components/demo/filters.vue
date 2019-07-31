@@ -5,15 +5,15 @@
                 <FormItem label="日期格式化">
                     <Breadcrumb separator="=>">
                         <BreadcrumbItem>new Date | dateFormat</BreadcrumbItem>
-                        <BreadcrumbItem>{{new Date | dateFormat}}</BreadcrumbItem>
+                        <BreadcrumbItem>{{new Date() | dateFormat}}</BreadcrumbItem>
                     </Breadcrumb>
                 </FormItem>
             </Col>
             <Col>
                 <FormItem label="金额格式化">
                     <Breadcrumb separator="=>">
-                        <BreadcrumbItem>123456 | numFormat</BreadcrumbItem>
-                        <BreadcrumbItem>{{123456 | numFormat}}</BreadcrumbItem>
+                        <BreadcrumbItem>123456 | numberFormat</BreadcrumbItem>
+                        <BreadcrumbItem>{{123456 | numberFormat}}</BreadcrumbItem>
                     </Breadcrumb>
                 </FormItem>
             </Col>

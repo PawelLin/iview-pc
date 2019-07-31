@@ -120,11 +120,14 @@ export const numberFormat = (str, fixed) => {
 }
 
 /**
- * @description 只合并对象拥有的属性 assignHas(obj1, obj2)
+ * @param {*} obj1 要合并的对象
+ * @param {*} obj2 对象
+ * @param [*]|'*' ignoreKey 忽略的key集合或单个key
+ * @description 只合并对象拥有的属性 assignHas(obj1, obj2, ignoreKey)
  */
-export const assignHas = (obj1 = {}, obj2 = {}) => {
+export const assignHas = (obj1 = {}, obj2 = {}, ignoreKey = '') => {
     Object.keys(obj2).forEach(key => {
-        if (obj1.hasOwnProperty(key)) obj1[key] = obj2[key]
+        if (obj1.hasOwnProperty(key) && (ignoreKey.indexOf(key) < 0)) obj1[key] = obj2[key]
     })
 }
 

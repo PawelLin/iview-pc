@@ -1,5 +1,5 @@
 <template>
-    <Form class="demo-filters" :label-width="100">
+    <Form class="demo-filters" :label-width="120">
         <Row>
             <Col>
                 <FormItem label="v-money">
@@ -9,14 +9,20 @@
             </Col>
             <Col>
                 <FormItem label="v-number">
-                    <span class="desc">限制input只能输入数字</span>
-                    用法：v-number
+                    <span class="desc">限制input只能输入数字或regex限定的字符</span>
+                    用法：v-number = " regex "
                 </FormItem>
             </Col>
             <Col>
                 <FormItem label="v-thousands">
                     <span class="desc">限制input只能输入数字和逗号，失去焦点自动格式化千分位</span>
                     用法：v-thousands = " 'number' "
+                </FormItem>
+            </Col>
+            <Col>
+                <FormItem label="v-thousands-auto">
+                    <span class="desc">限制input只能输入数字，边输入边格式化千分位</span>
+                    用法：v-thousands-auto = " 'number' "
                 </FormItem>
             </Col>
             <Col>

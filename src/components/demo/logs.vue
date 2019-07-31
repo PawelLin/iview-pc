@@ -37,6 +37,23 @@
                 </ul>
             </TimelineItem>
             <TimelineItem>
+                <p class="title">
+                    <span>2019.07.26</span>
+                </p>
+                <ul class="content">
+                    <li>新增公共请求说明模块</li>
+                    <li>新增文件下载公共请求</li>
+                </ul>
+            </TimelineItem>
+            <TimelineItem>
+                <p class="title">
+                    <span>2019.07.31</span>
+                </p>
+                <ul class="content">
+                    <li>文件上传组件新增accept属性</li>
+                </ul>
+            </TimelineItem>
+            <TimelineItem>
                 <p class="title">continue...</p>
             </TimelineItem>
         </Timeline>

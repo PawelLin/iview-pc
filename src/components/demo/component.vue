@@ -9,7 +9,7 @@
             </Col>
             <Col>
                 <FormItem label="多文件上传" prop="filesName">
-                    <FileUpload v-model="form.filesName" @change="uploadFiles" :files="['xls', 'xlsx', 'txt']" multiple></FileUpload>
+                    <FileUpload v-model="form.filesName" @change="uploadFiles" :files="['xls', 'xlsx', 'txt', 'jpg', 'mp4', 'mp3']" multiple></FileUpload>
                     <Tag v-for="item in form.filesTags" :key="`${item.name}${item.type}`" style="margin-left:10px;cursor: default;">
                         {{item.name | shortName(16, item.type)}}{{item.type}}
                     </Tag>
@@ -23,8 +23,10 @@
             </Col>
             <Col>
                 <FormItem label="自定义图标">
+                    <Icon custom="iconfont icon-line" size="20" color="#2d8cf0"/>
                     <Icon custom="iconfont icon-bank" size="20" color="#2d8cf0"/>
                 </FormItem>
+                <span class="desc">使用的自定义图标来自<a target="_blank" href="https://www.iconfont.cn/">iconfont</a>，新增图标需重新生成图标字体包</span>
             </Col>
             <Col>
                 <Button @click="handleSubmit" type="primary">提交</Button>

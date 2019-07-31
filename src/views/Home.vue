@@ -34,9 +34,6 @@ export default {
         Start
     },
     created () {
-        let ss = '(([1-9]?\\d|1\\d{2})|2[0-4]\\d|25[0-5])'
-        let aa = `^(${ss}\\.){3}${ss}(\\/${ss})?$`
-        // console.log(new RegExp(aa).test('192.168.1.255/1123/123'))
     },
     methods: {
         load () {

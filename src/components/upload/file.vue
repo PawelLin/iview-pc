@@ -2,12 +2,13 @@
     <div class="ivu-upload ivu-upload-select" @click="handleClick">
         <!-- 模拟Input组件的必填 -->
         <Input :value="value" disabled style="display: none;"></Input>
-        <input ref="input" type="file" class="ivu-upload-input" @change="handleChange" :multiple="multiple">
+        <input ref="input" type="file" class="ivu-upload-input" @change="handleChange" :multiple="multiple" :accept="accept">
         <Button :type="type" icon="md-cloud-upload" :size="btnSize"><slot>点击上传</slot></Button>
     </div>
 </template>
 
 <script>
+import ACCEPTS from './accept'
 export default {
     name: 'FileUpload',
     props: {
@@ -38,11 +39,24 @@ export default {
     },
     data () {
         return {
-            MB1: 1024 * 1024,
-            list: []
+            accept: ''
         }
     },
+    watch: {
+        files (files) {
+            this.setAccept(files)
+        }
+    },
+    beforeCreate () {
+        this.MB1 = 1024 * 1024
+    },
+    created () {
+        this.setAccept(this.files)
+    },
     methods: {
+        setAccept (files) {
+            this.accept = files.map(type => ACCEPTS[type]).join(',')
+        },
         handleClick () {
             this.$refs.input.click()
         },

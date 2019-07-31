@@ -2,7 +2,7 @@ import Vue from 'vue'
 import validate from '@/libs/validate'
 import { rsaEncrypt } from '@/libs/rsa'
 
-const updatePwd =  new Vue({
+const updatePwd = new Vue({
     data () {
         const validateOrigPassword = (rule, value, callback) => {
             callback(!value ? new Error('原密码不能为空') : undefined)

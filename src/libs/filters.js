@@ -1,4 +1,4 @@
-import { dateFormat as format, numberFormat as numFormat, shortName } from './tools'
+import { dateFormat, numberFormat, shortName } from './tools'
 import * as emnus from './enums'
 
 const emnusFilters = {}
@@ -6,9 +6,17 @@ Object.keys(emnus).forEach(key => {
     emnusFilters[key] = val => emnus[key][val]
 })
 
-export default {
-    dateFormat: (val, fmt) => val ? format(val, fmt) : '',
-    numFormat: (val, fixed) => numFormat(val, fixed),
+const filters = {
+    dateFormat,
+    numberFormat,
     shortName,
     ...emnusFilters
 }
+
+const importFilter = Vue => {
+    Object.keys(filters).forEach(key => {
+        Vue.filter(key, filters[key])
+    })
+}
+
+export default importFilter
