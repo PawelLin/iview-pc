@@ -16,6 +16,11 @@
                 </FormItem>
             </Col>
             <Col>
+                <FormItem label="媒体类上传" prop="mediaList">
+                    <MediaUpload v-model="form.mediaList" :media-list="form.mediaList" type="audio,image,video" compass></MediaUpload>
+                </FormItem>
+            </Col>
+            <Col>
                 <FormItem label="筛选下拉框" prop="select">
                     <InputSelect v-model="form.select" :options="list" values="id" label="name"  />
                 </FormItem>
@@ -38,10 +43,12 @@
 <script>
 import InputSelect from '@/components/input/select.vue'
 import FileUpload from '@/components/upload/file.vue'
+import MediaUpload from '@/components/upload/media.vue'
 export default {
     name: 'demo_component',
     components: {
         FileUpload,
+        MediaUpload,
         InputSelect
     },
     data () {
@@ -53,6 +60,7 @@ export default {
                 files: '',
                 filesName: '',
                 filesTags: [],
+                mediaList: [],
                 select: ''
             },
             list: [
@@ -64,12 +72,14 @@ export default {
             rules: {
                 fileName: { required: true, message: '请选择文件' },
                 filesName: { required: true, message: '请选择文件' },
+                mediaList: { required: true, message: '请选择文件' },
                 select: { required: true, message: '请选择' }
             }
         }
     },
     methods: {
         uploadFile (files) {
+            console.log(files[0])
             let formData = new FormData()
             this.form.fileName = files[0].name
             this.form.fileType = files[0].name.substr(files[0].name.lastIndexOf('.'))

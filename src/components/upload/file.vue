@@ -39,24 +39,17 @@ export default {
     },
     data () {
         return {
-            accept: ''
         }
     },
-    watch: {
-        files (files) {
-            this.setAccept(files)
+    computed: {
+        accept () {
+            return this.files.map(type => ACCEPTS[type]).join(',')
         }
     },
     beforeCreate () {
         this.MB1 = 1024 * 1024
     },
-    created () {
-        this.setAccept(this.files)
-    },
     methods: {
-        setAccept (files) {
-            this.accept = files.map(type => ACCEPTS[type]).join(',')
-        },
         handleClick () {
             this.$refs.input.click()
         },
