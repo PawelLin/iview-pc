@@ -9,6 +9,7 @@ const importDirective = Vue => {
      *  recover: /拖动结束之后是否恢复到原来的位置/
      * }
      */
+    Vue.directive('clickoutside', directive.clickoutside)
     Vue.directive('draggable', directive.draggable)
     Vue.directive('money', directive.money)
     Vue.directive('number', directive.number)

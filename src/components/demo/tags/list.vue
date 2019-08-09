@@ -40,7 +40,7 @@ export default {
             this.$router.push({
                 name: 'demo_tags_detail',
                 query: { id: row.id, name: row.name, sex: row.sex },
-                params: { rename: row.id ? '人物编辑' : '人物新增' }
+                params: { rename: row.id ? `${row.name}编辑` : '人物新增' }
             })
         }
     }

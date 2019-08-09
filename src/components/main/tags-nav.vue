@@ -7,18 +7,25 @@
                     type="dot" :fade="false"
                     @click.native="toPage(item)"
                     @on-close="handleRemoveTag(item, index)"
+                    @contextmenu.prevent.native="showContextMenu(item, $event)"
                     :color="setActiveTag(item)"
                     :closable="item.name !== home.name">
                     {{item.title}}
                 </Tag>
             </div>
         </div>
+        <transition name="transition-drop">
+            <ul v-show="contextMenu.visible" class="contextmenu" v-clickoutside="hideContextMenu" :style="{ top: contextMenu.top + 'px', left: contextMenu.left + 'px' }">
+                <li @click="closeMenuOther" class="ivu-dropdown-item">关闭其他</li>
+                <li @click="closeMenuAll" class="ivu-dropdown-item">关闭所有</li>
+            </ul>
+        </transition>
         <Button @click="moveRight" class="btn"><Icon size="18" type="ios-arrow-forward" /></Button>
         <Dropdown transfer placement="bottom-end" class="drop-close">
             <Button class="btn btn-close"><Icon size="18" type="ios-close-circle-outline" /></Button>
             <DropdownMenu slot="list">
+                <DropdownItem @click.native="closeOther()">关闭其他</DropdownItem>
                 <DropdownItem @click.native="closeAll">关闭所有</DropdownItem>
-                <DropdownItem @click.native="closeOther">关闭其他</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     </div>
@@ -50,7 +57,13 @@ export default {
             left: 0,
             disWidth: 0,
             tagMap: null,
-            onlyName: true // tag是否只根据name来判断
+            onlyName: true, // tag是否只根据name来判断
+            contextMenu: {
+                visible: false,
+                top: 0,
+                left: 0,
+                route: null
+            }
         }
     },
     computed: {
@@ -81,6 +94,7 @@ export default {
         $route (to) {
             if (!this.onlyName) this.delData()
             this.addTag(to)
+            this.hideContextMenu()
         },
         tagList (item) {
             // 同步store及localstorage
@@ -172,9 +186,10 @@ export default {
             this.left = 0
             this.$router.push({ name: this.home.name })
         },
-        closeOther () {
+        closeOther (route = this.$route) {
+            let filter = this.tagFilter(['name', 'query', 'params'])
             let list = this.tagList.filter(item => {
-                return item.name === this.$route.name || item.name === this.home.name
+                return !objNotEqual(item, route, filter) || item.name === this.home.name
             })
             this.setTagList(list)
             this.left = 0
@@ -197,6 +212,28 @@ export default {
         },
         tagFilter (filter) {
             return this.onlyName ? ['name'] : filter
+        },
+        showContextMenu (item, e) {
+            this.contextMenu.visible = false
+            this.$nextTick(() => {
+                this.contextMenu.left = e.clientX
+                this.contextMenu.top = e.clientY + 20
+                this.contextMenu.visible = true
+                this.contextMenu.route = item
+            })
+        },
+        hideContextMenu () {
+            this.contextMenu.visible = false
+        },
+        closeMenuAll () {
+            this.hideContextMenu()
+            this.closeAll()
+        },
+        closeMenuOther () {
+            let { name, query, params } = this.contextMenu.route
+            this.hideContextMenu()
+            this.closeOther(name)
+            this.$router.replace({ name, query, params })
         }
     }
 }
@@ -251,6 +288,24 @@ export default {
     height: 100%;
     /deep/ .ivu-dropdown-rel {
         height: inherit;
+    }
+}
+.contextmenu {
+    position: absolute;
+    margin: 0;
+    padding: 5px 0;
+    background: #fff;
+    z-index: 1000;
+    list-style-type: none;
+    border-radius: 4px;
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .1);
+    li {
+        margin: 0;
+        padding: 5px 15px;
+        cursor: pointer;
+        &:hover {
+            background: #eee;
+        }
     }
 }
 </style>
