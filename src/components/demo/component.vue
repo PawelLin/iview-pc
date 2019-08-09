@@ -17,7 +17,7 @@
             </Col>
             <Col>
                 <FormItem label="媒体类上传" prop="mediaList">
-                    <MediaUpload v-model="form.mediaList" :media-list="form.mediaList" type="audio,image,video" compass></MediaUpload>
+                    <MediaUpload v-model="form.mediaList" :media-list="form.mediaList" type="audio,image,video" compress></MediaUpload>
                 </FormItem>
             </Col>
             <Col>

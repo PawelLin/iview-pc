@@ -92,24 +92,24 @@ export default {
         handleChange (e) {
             let media = {}
             let file = e.target.files[0]
-            let type = file.type.split('/')[0]
-            if (this.type && this.types.indexOf(type) === -1) {
+            let types = file.type.split('/')
+            if (this.type && this.types.indexOf(types[0]) === -1) {
                 this.$Message.warning(`只能上传${this.types.map(item => this.enums[item]).join(',')}类的文件`)
             } else if (file.size > this.size * this.MB1) {
                 this.$Message.warning(`文件大小不能超过${this.size}M`)
             } else {
-                media.type = type
-                if (this.compress) {
-                    media.src = window.URL.createObjectURL(file)
-                    this.list.push(media)
-                    this.$emit('input', this.list)
-                } else {
+                media.type = types[0]
+                if (this.compress && types[1] === 'jpeg') {
                     this.handleCompress(file).then(data => {
                         media.src = data.src
                         media.file = data.file
                         this.list.push(media)
                         this.$emit('input', this.list)
                     })
+                } else {
+                    media.src = window.URL.createObjectURL(file)
+                    this.list.push(media)
+                    this.$emit('input', this.list)
                 }
             }
             e.target.value = ''
@@ -143,6 +143,8 @@ export default {
                         canvas.width = img.width
                         canvas.height = img.height
                         ctx.clearRect(0, 0, canvas.width, canvas.height)
+                        ctx.fillStyle = 'white'
+                        ctx.fillRect(0, 0, canvas.width, canvas.height)
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
                         let DataURL = canvas.toDataURL('image/jpeg', 0.8)
                         resolve({ src: DataURL, file: this.dataURItoBlob(DataURL) })
