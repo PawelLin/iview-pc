@@ -52,5 +52,10 @@ export default [
         path: '/demo/logs',
         name: 'demo_logs',
         component: () => import('_c/demo/logs.vue')
+    },
+    {
+        path: '/demo/table',
+        name: 'demo_table',
+        component: () => import('_c/demo/table/index.vue')
     }
 ]

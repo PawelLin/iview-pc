@@ -232,7 +232,7 @@ export default {
         closeMenuOther () {
             let { name, query, params } = this.contextMenu.route
             this.hideContextMenu()
-            this.closeOther(name)
+            this.closeOther(this.contextMenu.route)
             this.$router.replace({ name, query, params })
         }
     }

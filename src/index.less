@@ -38,3 +38,36 @@
         right: 0;
     }
 }
+// 纯展示表格水平方向覆盖iview表格样式
+.self-table-show {
+    overflow-x: auto;
+    table {
+        position: relative;
+        width: 100%;
+        th, td {
+            padding: 0 18px;
+        }
+        th {
+            min-width: 160px;
+            width: 160px;
+        }
+        td {
+            min-width: 200px;
+            word-break: break-all;
+        }
+    }
+}
+// 纯展示表格垂直方向覆盖iview表格样式
+.self-table-list {
+    table {
+        th, td {
+            padding: 0 18px;
+        }
+    }
+}
+// 展示表格含表单覆盖iview表单样式
+.self-table-form {
+    .ivu-form-item {
+        margin-bottom: 0;
+    }
+}

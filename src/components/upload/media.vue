@@ -36,7 +36,9 @@ export default {
     props: {
         value: {
             type: Array,
-            default: () => []
+            default () {
+                return []
+            }
         },
         type: {
             type: String, // image,video,audio
@@ -107,9 +109,19 @@ export default {
                         this.$emit('input', this.list)
                     })
                 } else {
-                    media.src = window.URL.createObjectURL(file)
-                    this.list.push(media)
-                    this.$emit('input', this.list)
+                    if (types[0] === 'image') {
+                        this.handleBase64(file).then(data => {
+                            media.src = data.src
+                            media.file = data.file
+                            this.list.push(media)
+                            this.$emit('input', this.list)
+                        })
+                    } else {
+                        media.src = window.URL.createObjectURL(file)
+                        media.file = file
+                        this.list.push(media)
+                        this.$emit('input', this.list)
+                    }
                 }
             }
             e.target.value = ''
@@ -129,6 +141,16 @@ export default {
                 this.modal.type = ''
                 this.modal.src = ''
             }
+        },
+        handleBase64 (file) {
+            return new Promise((resolve, reject) => {
+                let reader = new FileReader()
+                reader.readAsDataURL(file)
+                reader.onload = () => {
+                    let DataURL = reader.result
+                    resolve({ src: DataURL, file: this.dataURItoBlob(DataURL) })
+                }
+            })
         },
         handleCompress (file) {
             return new Promise((resolve, reject) => {

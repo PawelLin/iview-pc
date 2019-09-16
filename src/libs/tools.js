@@ -132,10 +132,12 @@ export const assignHas = (obj1 = {}, obj2 = {}, ignoreKey = '') => {
 }
 
 /**
- * @description 字符串长度超过num缩略显示 shortName(name, num, repName)
+ * @description 文件名长度超过num, ...展示 shortName(name, num)
  */
-export const shortName = (name, num = 16, repName = '') => {
-    name = name.replace(repName, '')
-    let len = name.length
-    return len > num ? name.substr(0, 14) + '...' + name.substr(len - 2, len) : name
+export const shortName = (fileName = '', maxNum = 20) => {
+    if (fileName.length <= maxNum) return fileName
+    let endName = fileName.substr(fileName.lastIndexOf('.') - 2)
+    let endNameLen = endName.length
+    let startName = fileName.replace(endName, '').substr(0, maxNum - endNameLen)
+    return startName + '...' + endName
 }

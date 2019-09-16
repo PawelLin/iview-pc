@@ -3,37 +3,39 @@
         <Timeline class="time-line">
             <TimelineItem>
                 <p class="title">
-                    <span>2019.02.11</span>
-                    <!-- <code class="online">2019-08-01</code> -->
+                    <span>2019.09.16</span>
                 </p>
                 <ul class="content">
-                    <li>项目初始化及公共功能开发 - <code>e2cf0190b8052b00a0c5526f727d152f9b0e6c2d</code></li>
+                    <li>新增四种表格demo：
+                        <Tag color="blue">列表 - 条件过滤</Tag>
+                        <Tag color="blue">列表 - 一列占多行</Tag>
+                        <Tag color="blue">水平 - 固定列&固定行</Tag>
+                        <Tag color="blue">水平 - 一行占多列</Tag>
+                    </li>
                 </ul>
             </TimelineItem>
             <TimelineItem>
                 <p class="title">
-                    <span>2019.02.17</span>
+                    <span>2019.08.09</span>
                 </p>
                 <ul class="content">
-                    <li>新增动态页面标签栏</li>
+                    <li>tab菜单新增右键关闭操作</li>
                 </ul>
             </TimelineItem>
             <TimelineItem>
                 <p class="title">
-                    <span>2019.03.08</span>
+                    <span>2019.08.06</span>
                 </p>
                 <ul class="content">
-                    <li>新增手动关闭页面标签方法</li>
-                    <li>新增同组件对应多个页面标签的标签栏类型</li>
+                    <li>新增媒体类文件上传预览组件</li>
                 </ul>
             </TimelineItem>
             <TimelineItem>
                 <p class="title">
-                    <span>2019.07.24</span>
+                    <span>2019.07.31</span>
                 </p>
                 <ul class="content">
-                    <li>新增迭代日志</li>
-                    <li>优化输入框指令，不再依赖this，从vnode获取</li>
+                    <li>文件上传组件新增accept属性</li>
                 </ul>
             </TimelineItem>
             <TimelineItem>
@@ -47,30 +49,38 @@
             </TimelineItem>
             <TimelineItem>
                 <p class="title">
-                    <span>2019.07.31</span>
+                    <span>2019.07.24</span>
                 </p>
                 <ul class="content">
-                    <li>文件上传组件新增accept属性</li>
+                    <li>新增迭代日志</li>
+                    <li>优化输入框指令，不再依赖this，从vnode获取</li>
                 </ul>
             </TimelineItem>
             <TimelineItem>
                 <p class="title">
-                    <span>2019.08.06</span>
+                    <span>2019.03.08</span>
                 </p>
                 <ul class="content">
-                    <li>新增媒体类文件上传预览组件</li>
+                    <li>新增手动关闭页面标签方法</li>
+                    <li>新增同组件对应多个页面标签的标签栏类型</li>
                 </ul>
             </TimelineItem>
             <TimelineItem>
                 <p class="title">
-                    <span>2019.08.09</span>
+                    <span>2019.02.17</span>
                 </p>
                 <ul class="content">
-                    <li>tab菜单新增右键关闭操作</li>
+                    <li>新增动态页面标签栏</li>
                 </ul>
             </TimelineItem>
             <TimelineItem>
-                <p class="title">continue...</p>
+                <p class="title">
+                    <span>2019.02.11</span>
+                    <!-- <code class="online">2019-08-01</code> -->
+                </p>
+                <ul class="content">
+                    <li>项目初始化及公共功能开发 - <code>e2cf0190b8052b00a0c5526f727d152f9b0e6c2d</code></li>
+                </ul>
             </TimelineItem>
         </Timeline>
     </Card>

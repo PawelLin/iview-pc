@@ -44,6 +44,11 @@
                                 <span class="desc">只合并对象拥有的属性</span>
                             </FormItem>
                         </Col>
+                        <Col>
+                            <FormItem label="shortName">
+                                <span class="desc">字符串长度超过num缩略显示</span>
+                            </FormItem>
+                        </Col>
                     </Row>
                 </Card>
             </Col>
