@@ -41,44 +41,6 @@
                     </Col>
                 </Row>
             </Col>
-            <Col span="12">
-                <div class="ivu-table-wrapper self-table-show">
-                    <table cellspacing="0" cellpadding="0" class="ivu-table ivu-table-small ivu-table-border">
-                        <tr>
-                            <th>AP名称</th>
-                            <td>colspan: 1 rowspan: 1</td>
-                            <td rowspan="4" colspan="2">colspan: 2 rowspan: 4</td>
-                        </tr>
-                        <tr>
-                            <th>AP公司名称</th>
-                            <td>colspan: 1 rowspan: 1</td>
-                        </tr>
-                        <tr>
-                            <th>AP网络域名</th>
-                            <td>colspan: 1 rowspan: 1</td>
-                        </tr>
-                        <tr>
-                            <th>省份城市</th>
-                            <td colspan="1">colspan: 1 rowspan: 1</td>
-                        </tr>
-                    </table>
-                </div>
-            </Col>
-            <Col span="24">
-                <Form :model="tableForm" class="self-table-form">
-                    <TableShow :columns="columns" :data="data" is-form>
-                        <template slot="form1" slot-scope>
-                            <FormItem prop="form1" :rules="{ required: true, message: '请输入' }" style="ver">
-                                <InputNumber :max="100" :min="1" v-model="tableForm.form1"></InputNumber>
-                                * 2 = {{(tableForm.form1 || 1) * 2}}
-                            </FormItem>
-                        </template>
-                        <template slot="img" slot-scope="row">
-                            <img :src="row.img" alt="头像" style="max-height: 80px;">
-                        </template>
-                    </TableShow>
-                </Form>
-            </Col>
         </Row>
     </Form>
 </template>
@@ -87,14 +49,12 @@
 import InputSelect from '@/components/input/select.vue'
 import FileUpload from '@/components/upload/file.vue'
 import MediaUpload from '@/components/upload/media.vue'
-import TableShow from '_c/table/index.vue'
 export default {
     name: 'demo_component',
     components: {
         FileUpload,
         MediaUpload,
-        InputSelect,
-        TableShow
+        InputSelect
     },
     data () {
         return {
