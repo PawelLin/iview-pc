@@ -258,10 +258,14 @@ export default {
     padding-left: 4px;
     white-space: nowrap;
     transition: left .3s ease;
+    /deep/ .ivu-icon-ios-close {
+        width: 14px;
+    }
 }
 .btn {
     padding-left: 5px;
     padding-right: 5px;
+    width: 28px;
     height: 100%;
     border: none;
     border-top: 1px solid #F0F0F0;

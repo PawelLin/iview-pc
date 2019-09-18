@@ -57,7 +57,7 @@ export default {
     },
     created () {
         this.keys = this.setData(this.transData(this.columns), this.number)
-        console.log(this.setData(this.transData(this.columns), this.number))
+        // console.log(this.setData(this.transData(this.columns), this.number))
     },
     watch: {
         columns (columns) {
