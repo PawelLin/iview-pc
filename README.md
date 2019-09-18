@@ -40,6 +40,11 @@ npm run build
 - 固定功能
     - 用户管理
     - 角色管理
+- 表格扩展
+    - 条件过滤
+    - 一列占多行
+    - 固定列&固定行
+    - 一行占多列
 - 错误页面
     - 403页面
     - 404页面
@@ -67,6 +72,13 @@ npm run build
         ├── main  公共页面
         └── upload  文件上传
     ├── directive  自定义指令
+        ├── clickoutside 节点以外点击
+        ├── draggable 拖拽
+        ├── maxheight 设置最大高度
+        ├── money Input金额输入
+        ├── number Input数字输入
+        ├── thousands Input千分位输入
+        └── thousands Input千分位自动格式输入
     ├── libs  封装工具函数
         ├── rsa  加解密
         ├── axios  http封装
