@@ -3,6 +3,14 @@
         <Timeline class="time-line">
             <TimelineItem>
                 <p class="title">
+                    <span>2019.09.24</span>
+                </p>
+                <ul class="content">
+                    <li>新增拖动指令 v-move</li>
+                </ul>
+            </TimelineItem>
+            <TimelineItem>
+                <p class="title">
                     <span>2019.09.16</span>
                 </p>
                 <ul class="content">

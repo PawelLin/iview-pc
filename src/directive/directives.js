@@ -5,6 +5,7 @@ import number from './module/number'
 import thousands from './module/thousands'
 import thousandsAuto from './module/thousandsAuto'
 import maxheight from './module/maxheight'
+import move from './module/move'
 const directives = {
     clickoutside,
     draggable,
@@ -12,7 +13,8 @@ const directives = {
     number,
     thousands,
     thousandsAuto,
-    maxheight
+    maxheight,
+    move
 }
 
 export default directives
