@@ -14,17 +14,23 @@ export default {
         const handleMousedown = e => {
             e.preventDefault()
             /**
+             * 通过getBoundingClientRect获取拖动div当前的坐标位置
+             * width = 水平方向上的左右距离差，即当前水平宽度
+             * height = 垂直方向上的上下距离差，即当前水平高度
              * 通过getComputedStyle获取的transform为矩阵，如 matrix(1, 0, 0, 1, -100, -100)
-             * minLeft = 0 + translateX
-             * minTop = 0 + translateY
-             * maxLeft = 容器宽度 - 当前宽度 - translateX
-             * maxTop = 容器高度 - 当前高度 - translateY
+             * minLeft = 0 + translateX + (当前水平宽度 - 实际宽度) / 2
+             * minTop = 0 + translateY + (当前水平高度 - 实际高度) / 2
+             * maxLeft = 容器宽度 - 当前水平宽度 - translateX
+             * maxTop = 容器高度 - 当前水平高度 - translateY
              */
+            const rect = el.getBoundingClientRect()
+            const width = Math.abs(rect.left - rect.right)
+            const height = Math.abs(rect.top - rect.bottom)
             const transforms = window.getComputedStyle(el).transform.replace(/\s/g, '').split(',')
-            minLeft = -parseFloat(transforms[4]) || 0
-            minTop = -parseFloat(transforms[5]) || 0
-            maxLeft = ((parent && parent.offsetWidth) || window.innerWidth) - el.offsetWidth + minLeft
-            maxTop = ((parent && parent.offsetHeight) || window.innerHeight) - el.offsetHeight + minTop
+            minLeft = (-parseFloat(transforms[4]) || 0) + (width - el.offsetWidth) / 2
+            minTop = (-parseFloat(transforms[5]) || 0) + (height - el.offsetHeight) / 2
+            maxLeft = ((parent && parent.offsetWidth) || window.innerWidth) - width + minLeft
+            maxTop = ((parent && parent.offsetHeight) || window.innerHeight) - height + minTop
             x = e.clientX
             y = e.clientY
             l = el.offsetLeft
@@ -36,8 +42,8 @@ export default {
             // 鼠标移动前后距离差 + 拖动div原有的位置
             let left = e.clientX - x + l
             let top = e.clientY - y + t
-            left = left > minLeft ? (left < maxLeft ? left : maxLeft) : minLeft
-            top = top > minTop ? (top < maxTop ? top : maxTop) : minTop
+            left = Math.min(Math.max(left, minLeft), maxLeft)
+            top = Math.min(Math.max(top, minTop), maxTop)
             el.style.left = left + 'px'
             el.style.top = top + 'px'
         }
@@ -48,7 +54,6 @@ export default {
         el.__vueMouseup__ = handleMouseup
         on(el, 'mousedown', handleMousedown)
         on(window, 'mousemove', handleMousemove)
-        on(el, 'mouseup', handleMouseup)
         on(window, 'mouseup', handleMouseup)
     },
     unbind (el, binding) {

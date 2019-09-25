@@ -11,7 +11,14 @@
                 </Alert>
             </template>
         </Table>
-        <Icon class="move" type="md-move" size="80" color="#2d8cf0" v-move></Icon>
+        <div class="move" v-move :style="{ transform: `translate(-100%, calc(-100% - 300px)) rotate(${rotate}deg) scale(${scale})` }">
+            <Icon type="md-move" size="80" color="#2d8cf0"></Icon>
+            <div class="move-icons">
+                <Icon @click="scale += 0.2;" type="md-add-circle" size="30" color="#2d8cf0" />
+                <Icon @click="scale -= 0.2" type="md-remove-circle" size="30" color="#2d8cf0" />
+                <Icon @click="rotate += 30" type="md-refresh-circle" size="30" color="#2d8cf0"/>
+            </div>
+        </div>
         <div class="move-contain">
             <Icon class="move-icon" type="md-move" size="80" v-move="{ body: '.move-contain' }"></Icon>
         </div>
@@ -36,7 +43,9 @@ export default {
                 { name: 'v-thousands-auto', note: '限制input只能输入数字，边输入边格式化千分位', use: 'v-thousands-auto = " \'number\' "' },
                 { name: 'v-maxheight', note: '设置dom的最大高度', use: 'v-maxheight = " other-height "' },
                 { name: 'v-move', note: '拖动', use: 'v-move [ = "{ body: \'#mask\' }"]' }
-            ]
+            ],
+            rotate: 0,
+            scale: 1
         }
     }
 }
@@ -53,11 +62,18 @@ export default {
     position: fixed;
     top: 100%;
     left: 100%;
-    transform: translate(-100%, calc(-100% - 300px));
-    z-index:9999;
+    padding: 10px 0;
+    width: 120px;
+    // transform: translate(-100%, calc(-100% - 300px)) rotate(45deg);
+    text-align: center;
     background-color: #ffffff;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid #2d8cf0;
+    transition: transform .2s;
+    z-index: 9999;
     cursor: move;
+    > .move-icons > * {
+        cursor: pointer;
+    }
 }
 .move-contain {
     position: fixed;
