@@ -11,16 +11,14 @@
                 </Alert>
             </template>
         </Table>
-        <div class="move" v-move :style="{ transform: `translate(-100%, calc(-100% - 300px)) rotate(${rotate}deg) scale(${scale})` }">
+        <div ref="move" class="move" v-move :style="{ transform }">
             <Icon type="md-move" size="80" color="#2d8cf0"></Icon>
             <div class="move-icons">
-                <Icon @click="scale += 0.2;" type="md-add-circle" size="30" color="#2d8cf0" />
-                <Icon @click="scale -= 0.2" type="md-remove-circle" size="30" color="#2d8cf0" />
-                <Icon @click="rotate += 30" type="md-refresh-circle" size="30" color="#2d8cf0"/>
+                <Icon @click="setTranfrom" type="md-refresh-circle" size="30" color="#2d8cf0"/>
             </div>
         </div>
         <div class="move-contain">
-            <Icon class="move-icon" type="md-move" size="80" v-move="{ body: '.move-contain' }"></Icon>
+            <Icon class="move-icon" type="md-move" size="80" v-move="{ body: '.move-contain', limit: true }"></Icon>
         </div>
     </Card>
 </template>
@@ -42,10 +40,19 @@ export default {
                 { name: 'v-thousands', note: '限制input只能输入数字和逗号，失去焦点自动格式化千分位', use: 'v-thousands = " \'number\' "' },
                 { name: 'v-thousands-auto', note: '限制input只能输入数字，边输入边格式化千分位', use: 'v-thousands-auto = " \'number\' "' },
                 { name: 'v-maxheight', note: '设置dom的最大高度', use: 'v-maxheight = " other-height "' },
-                { name: 'v-move', note: '拖动', use: 'v-move [ = "{ body: \'#mask\' }"]' }
+                { name: 'v-move', note: '拖动', use: 'v-move [ = "{ body: \'#mask\', limit: true }"]' }
             ],
-            rotate: 0,
-            scale: 1
+            transform: 'translate(-100%, calc(-100% - 300px))'
+        }
+    },
+    methods: {
+        setTranfrom () {
+            const regx = /rotate\(\d+\w+\)/
+            let transform = this.$refs.move.style.transform
+            let rotate = transform.match(regx)
+            let size = (rotate && parseFloat(rotate[0].replace('rotate(', ''))) || 0
+            size += 30
+            this.transform = rotate ? transform.replace(regx, `rotate(${size}deg)`) : transform + ` rotate(${size}deg)`
         }
     }
 }
@@ -64,11 +71,11 @@ export default {
     left: 100%;
     padding: 10px 0;
     width: 120px;
-    // transform: translate(-100%, calc(-100% - 300px)) rotate(45deg);
+    // transform: translate(-100%, calc(-100% - 300px));
     text-align: center;
     background-color: #ffffff;
     border: 1px solid #2d8cf0;
-    transition: transform .2s;
+    // transition: transform .2s;
     z-index: 9999;
     cursor: move;
     > .move-icons > * {
@@ -85,8 +92,8 @@ export default {
     > .move-icon {
         position: absolute;
         top: 50%;
-        left: 100%;
-        transform: translate(-100%, -50%);
+        // left: 100%;
+        // transform: translate(-100%, -50%);
         background-color: #ffffff;
         cursor: move;
     }

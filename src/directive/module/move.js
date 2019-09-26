@@ -23,14 +23,16 @@ export default {
              * maxLeft = 容器宽度 - 当前水平宽度 - translateX
              * maxTop = 容器高度 - 当前水平高度 - translateY
              */
-            const rect = el.getBoundingClientRect()
-            const width = Math.abs(rect.left - rect.right)
-            const height = Math.abs(rect.top - rect.bottom)
-            const transforms = window.getComputedStyle(el).transform.replace(/\s/g, '').split(',')
-            minLeft = (-parseFloat(transforms[4]) || 0) + (width - el.offsetWidth) / 2
-            minTop = (-parseFloat(transforms[5]) || 0) + (height - el.offsetHeight) / 2
-            maxLeft = ((parent && parent.offsetWidth) || window.innerWidth) - width + minLeft
-            maxTop = ((parent && parent.offsetHeight) || window.innerHeight) - height + minTop
+            if (binding.value && binding.value.limit) {
+                const rect = el.getBoundingClientRect()
+                const width = Math.abs(rect.left - rect.right)
+                const height = Math.abs(rect.top - rect.bottom)
+                const transforms = window.getComputedStyle(el).transform.replace(/\s/g, '').split(',')
+                minLeft = (-parseFloat(transforms[4]) || 0) + (width - el.offsetWidth) / 2
+                minTop = (-parseFloat(transforms[5]) || 0) + (height - el.offsetHeight) / 2
+                maxLeft = ((parent && parent.offsetWidth) || window.innerWidth) - width + minLeft
+                maxTop = ((parent && parent.offsetHeight) || window.innerHeight) - height + minTop
+            }
             x = e.clientX
             y = e.clientY
             l = el.offsetLeft
@@ -42,17 +44,50 @@ export default {
             // 鼠标移动前后距离差 + 拖动div原有的位置
             let left = e.clientX - x + l
             let top = e.clientY - y + t
-            left = Math.min(Math.max(left, minLeft), maxLeft)
-            top = Math.min(Math.max(top, minTop), maxTop)
+            if (binding.value && binding.value.limit) {
+                left = Math.min(Math.max(left, minLeft), maxLeft)
+                top = Math.min(Math.max(top, minTop), maxTop)
+            }
             el.style.left = left + 'px'
             el.style.top = top + 'px'
         }
         const handleMouseup = e => {
             canMove = false
         }
+        const handleMousewheel = e => {
+            const zoom = (e.wheelDelta > 0 || e.detail > 0) ? 0.2 : -0.2
+            const regx = /scale\(\d+.?\d*\)/
+            let transform = el.style.transform
+            let scale = transform.match(regx)
+            let size = (scale && parseFloat(scale[0].replace('scale(', ''))) || 1
+            if (binding.value && binding.value.limit) {
+                const rect = el.getBoundingClientRect()
+                const width = Math.abs(rect.left - rect.right)
+                const height = Math.abs(rect.top - rect.bottom)
+                const initWidth = width / size
+                const initHeight = height / size
+                const parentWidth = (parent && parent.offsetWidth) || window.innerWidth
+                const parentHeight = (parent && parent.offsetHeight) || window.innerHeight
+                if ((initWidth * (size + zoom)) > parentWidth) {
+                    size = parentWidth / initWidth
+                    el.style.transform = scale ? transform.replace(regx, `scale(${size})`) : transform + ` scale(${size})`
+                    return
+                }
+                if ((initHeight * (size + zoom)) > parentHeight) {
+                    size = parentHeight / initHeight
+                    el.style.transform = scale ? transform.replace(regx, `scale(${size})`) : transform + ` scale(${size})`
+                    return
+                }
+            }
+            size += zoom
+            size = Math.min(Math.max(size, 0.2), 10)
+            el.style.transform = scale ? transform.replace(regx, `scale(${size})`) : transform + ` scale(${size})`
+        }
         el.__vueMousemove__ = handleMousemove
         el.__vueMouseup__ = handleMouseup
         on(el, 'mousedown', handleMousedown)
+        on(el, 'mousewheel', handleMousewheel)
+        on(el, 'DOMMouseScroll', handleMousewheel) // FireFox
         on(window, 'mousemove', handleMousemove)
         on(window, 'mouseup', handleMouseup)
     },
