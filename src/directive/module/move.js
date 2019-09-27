@@ -1,4 +1,4 @@
-import { on, off } from '@/libs/tools'
+import { on, off, device } from '@/libs/tools'
 export default {
     inserted: (el, binding, vnode) => {
         let maxLeft = 0
@@ -33,6 +33,10 @@ export default {
                 maxLeft = ((parent && parent.offsetWidth) || window.innerWidth) - width + minLeft
                 maxTop = ((parent && parent.offsetHeight) || window.innerHeight) - height + minTop
             }
+            if (!device.isPC) {
+                e.clientX = e.targetTouches[0].clientX
+                e.clientY = e.targetTouches[0].clientY
+            }
             x = e.clientX
             y = e.clientY
             l = el.offsetLeft
@@ -41,6 +45,10 @@ export default {
         }
         const handleMousemove = e => {
             if (!canMove) return
+            if (!device.isPC) {
+                e.clientX = e.targetTouches[0].clientX
+                e.clientY = e.targetTouches[0].clientY
+            }
             // 鼠标移动前后距离差 + 拖动div原有的位置
             let left = e.clientX - x + l
             let top = e.clientY - y + t
@@ -85,15 +93,26 @@ export default {
         }
         el.__vueMousemove__ = handleMousemove
         el.__vueMouseup__ = handleMouseup
-        on(el, 'mousedown', handleMousedown)
-        on(el, 'mousewheel', handleMousewheel)
-        on(el, 'DOMMouseScroll', handleMousewheel) // FireFox
-        on(window, 'mousemove', handleMousemove)
-        on(window, 'mouseup', handleMouseup)
+        if (device.isPC) {
+            on(el, 'mousedown', handleMousedown)
+            on(el, 'mousewheel', handleMousewheel)
+            on(el, 'DOMMouseScroll', handleMousewheel) // FireFox
+            on(window, 'mousemove', handleMousemove)
+            on(window, 'mouseup', handleMouseup)
+        } else {
+            on(el, 'touchstart', handleMousedown)
+            on(window, 'touchmove', handleMousemove)
+            on(window, 'touchend', handleMouseup)
+        }
     },
     unbind (el, binding) {
-        off(window, 'mousemove', el.__vueMousemove__)
-        off(window, 'mouseup', el.__vueMouseup__)
+        if (device.isPC) {
+            off(window, 'mousemove', el.__vueMousemove__)
+            off(window, 'mouseup', el.__vueMouseup__)
+        } else {
+            off(window, 'touchmove', el.__vueMousemove__)
+            off(window, 'touchend', el.__vueMouseup__)
+        }
         delete el.__vueMousemove__
         delete el.__vueMouseup__
     }

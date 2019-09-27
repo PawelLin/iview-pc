@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import showUpdatePwd from '_c/main/update-pwd'
+import showUpdatePwd from '_c/extend/update-pwd'
 export default {
     name: 'HeaderBar',
     data () {
@@ -35,8 +35,10 @@ export default {
     },
     methods: {
         updatePwd () {
-            showUpdatePwd(true).then(() => {
-                this.$Message.success('修改密码成功')
+            showUpdatePwd({
+                callback(reslut) {
+                    this.$Message.success('修改密码成功')
+                }
             })
         },
         logout () {

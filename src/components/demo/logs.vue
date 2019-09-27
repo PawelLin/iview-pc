@@ -3,6 +3,14 @@
         <Timeline class="time-line">
             <TimelineItem>
                 <p class="title">
+                    <span>2019.09.27</span>
+                </p>
+                <ul class="content">
+                    <li>使用<Tag color="blue">Vue.extend</Tag>优化修改密码全局对话框</li>
+                </ul>
+            </TimelineItem>
+            <TimelineItem>
+                <p class="title">
                     <span>2019.09.24</span>
                 </p>
                 <ul class="content">

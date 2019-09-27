@@ -141,3 +141,12 @@ export const shortName = (fileName = '', maxNum = 20) => {
     let startName = fileName.replace(endName, '').substr(0, maxNum - endNameLen)
     return startName + '...' + endName
 }
+
+/**
+ * @description 判断设备
+ */
+export const device = ((u) => {
+    const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1
+    const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+    return { isAndroid, isiOS, isPC: !isAndroid && !isiOS }
+})(navigator.userAgent)

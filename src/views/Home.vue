@@ -13,7 +13,9 @@
         <Start :nums="5" /><br>
         <img alt="Vue logo" src="../assets/logo.png">
         <div>
-            <Button @click="updatePwd">修改密码</Button>
+            <Button @click="showScreenPreview">全屏预览</Button>
+            <Button @click="updatePwd1">修改密码vue</Button>
+            <Button @click="updatePwd2">修改密码js</Button>
             <Button @click="load">异步资源下载</Button>
             <Button><router-link to="/system/auth/user?aa=1">user</router-link></Button>
         </div>
@@ -24,7 +26,9 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
-import showUpdatePwd from '_c/main/update-pwd'
+import showUpdatePwd1 from '_c/extend/update-pwd'
+import showUpdatePwd2 from '_c/extend/update-pwd/bak'
+import showScreenPreview from '_c/extend/screen-preview'
 import Start from '_c/start.vue'
 
 export default {
@@ -46,10 +50,19 @@ export default {
                 newWindow.close()
             })
         },
-        updatePwd () {
-            showUpdatePwd().then(() => {
-                this.$Message.success('修改密码成功')
+        showScreenPreview () {
+            showScreenPreview()
+        },
+        updatePwd1 () {
+            showUpdatePwd1({
+                closable: true,
+                callback (result) {
+                    console.log(result)
+                }
             })
+        },
+        updatePwd2 () {
+            showUpdatePwd2(true)
         }
     }
 }
