@@ -11,9 +11,9 @@
         <Start :nums="4" /><br>
         <Start :nums="4.5" /><br>
         <Start :nums="5" /><br>
+        <img @click="showScreenPreview" src="https://git.f-road.com.cn/uploads/-/system/user/avatar/36/avatar.png?width=400" />
         <img alt="Vue logo" src="../assets/logo.png">
         <div>
-            <Button @click="showScreenPreview">全屏预览</Button>
             <Button @click="updatePwd1">修改密码vue</Button>
             <Button @click="updatePwd2">修改密码js</Button>
             <Button @click="load">异步资源下载</Button>

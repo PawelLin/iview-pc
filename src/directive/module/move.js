@@ -65,6 +65,7 @@ export default {
         const handleMousewheel = e => {
             const zoom = (e.wheelDelta > 0 || e.detail > 0) ? 0.2 : -0.2
             const regx = /scale\(\d+.?\d*\)/
+            const matrix = window.getComputedStyle(el).transform.match(/-?\d+(.\d+)?/g) || [1, 0, 0, 1, 0, 0]
             let transform = el.style.transform
             let scale = transform.match(regx)
             let size = (scale && parseFloat(scale[0].replace('scale(', ''))) || 1
