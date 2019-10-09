@@ -64,33 +64,42 @@ export default {
         }
         const handleMousewheel = e => {
             const zoom = (e.wheelDelta > 0 || e.detail > 0) ? 0.2 : -0.2
-            const regx = /scale\(\d+.?\d*\)/
-            const matrix = window.getComputedStyle(el).transform.match(/-?\d+(.\d+)?/g) || [1, 0, 0, 1, 0, 0]
+            // const matrix = window.getComputedStyle(el).transform.match(/-?\d+(.\d+)?/g) || [1, 0, 0, 1, 0, 0]
             let transform = el.style.transform
-            let scale = transform.match(regx)
-            let size = (scale && parseFloat(scale[0].replace('scale(', ''))) || 1
+            let scale = transform.match(/scale\((.*\d),(.*\d)\)/) || transform.match(/scale\((.*\d)\)\s/)
+            let sizeX = (scale && parseFloat(scale[1])) || 1
+            let sizeY = (scale && parseFloat(scale[2])) || 1
+            let sizeXY = sizeX / sizeY
+            const rect = el.getBoundingClientRect()
+            const width = Math.abs(rect.left - rect.right)
+            const height = Math.abs(rect.top - rect.bottom)
+            const getTransform = () => scale ? transform.replace(scale[0], `scale(${sizeX}, ${sizeY})`) : transform + ` scale(${sizeX}, ${sizeY})`
             if (binding.value && binding.value.limit) {
-                const rect = el.getBoundingClientRect()
-                const width = Math.abs(rect.left - rect.right)
-                const height = Math.abs(rect.top - rect.bottom)
-                const initWidth = width / size
-                const initHeight = height / size
+                const initWidth = width / sizeX
+                const initHeight = height / sizeY
                 const parentWidth = (parent && parent.offsetWidth) || window.innerWidth
                 const parentHeight = (parent && parent.offsetHeight) || window.innerHeight
-                if ((initWidth * (size + zoom)) > parentWidth) {
-                    size = parentWidth / initWidth
-                    el.style.transform = scale ? transform.replace(regx, `scale(${size})`) : transform + ` scale(${size})`
+                if ((initWidth * (sizeX + zoom)) > parentWidth) {
+                    sizeX = parentWidth / initWidth
+                    sizeY = sizeX / sizeXY
+                    el.style.transform = getTransform()
                     return
                 }
-                if ((initHeight * (size + zoom)) > parentHeight) {
-                    size = parentHeight / initHeight
-                    el.style.transform = scale ? transform.replace(regx, `scale(${size})`) : transform + ` scale(${size})`
+                if ((initHeight * (sizeY + zoom)) > parentHeight) {
+                    sizeY = parentHeight / initHeight
+                    sizeX = sizeY * sizeXY
+                    el.style.transform = getTransform()
                     return
                 }
             }
-            size += zoom
-            size = Math.min(Math.max(size, 0.2), 10)
-            el.style.transform = scale ? transform.replace(regx, `scale(${size})`) : transform + ` scale(${size})`
+            if (width >= height) {
+                sizeX = Math.min(Math.max(sizeX + zoom, 0.2), 10)
+                sizeY = sizeX / sizeXY
+            } else {
+                sizeY = Math.min(Math.max(sizeY + zoom, 0.2), 10)
+                sizeX = sizeY * sizeXY
+            }
+            el.style.transform = getTransform()
         }
         el.__vueMousemove__ = handleMousemove
         el.__vueMouseup__ = handleMouseup

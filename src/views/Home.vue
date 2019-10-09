@@ -51,7 +51,9 @@ export default {
             })
         },
         showScreenPreview () {
-            showScreenPreview()
+            showScreenPreview({
+                src: 'https://git.f-road.com.cn/uploads/-/system/user/avatar/36/avatar.png'
+            })
         },
         updatePwd1 () {
             showUpdatePwd1({

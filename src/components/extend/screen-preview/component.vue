@@ -4,7 +4,7 @@
             <div v-show="show" class="ivu-modal-mask" @click.self="handleHide"></div>
         </transition>
         <transition name="ease-in">
-            <img v-show="show" class="image" src="https://git.f-road.com.cn/uploads/-/system/user/avatar/36/avatar.png?width=400" alt="" v-move="{ limit: true }">
+            <img @load="handleLoaded" v-show="show" class="image" :src="src" style="transform: translate(-50%, -50%) scale(1, 1.5);" alt="" v-move="{ limit: true }">
         </transition>
     </div>
 </template>
@@ -14,7 +14,7 @@ export default {
     props: {
         src: {
             type: [Object, String],
-            // required: true
+            required: true
         },
         type: {
             type: String,
@@ -31,11 +31,10 @@ export default {
     },
     data () {
         return {
-            show: ''
+            show: false
         }
     },
     mounted () {
-        this.show = 'show'
         document.body.style.overflow = 'hidden'
     },
     methods: {
@@ -43,6 +42,9 @@ export default {
             document.body.removeChild(this.$el)
             document.body.style.overflow = ''
             this.$destroy()
+        },
+        handleLoaded () {
+            this.show = true
         }
     }
 }
@@ -50,12 +52,12 @@ export default {
 
 <style lang="less" scoped>
 .screen-preview {
+    user-select: none;
     .image{
         position: absolute;
         top: 50%;
         left: 50%;
         z-index: 1001;
-        transform: translate(-50%, -50%) scale(1);
     }
 }
 .ease-in-enter-active {
@@ -66,10 +68,10 @@ export default {
 }
 @keyframes ease-in {
     0% {
-        transform: translate(-50%, -50%) scale(0.9);
+        transform: translate(-50%, -50%) scale(0.9, 1.35);
     }
     100% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1, 1.5);
     }
 }
 </style>
