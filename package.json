@@ -10,7 +10,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "axios": "^0.18.0",
-    "iview": "^3.2.2",
+    "iview": "^4.0.0",
     "js-cookie": "^2.2.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
