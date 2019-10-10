@@ -261,6 +261,9 @@ export default {
     /deep/ .ivu-icon-ios-close {
         width: 14px;
     }
+    /deep/ .ivu-tag {
+        cursor: pointer;
+    }
 }
 .btn {
     padding-left: 5px;
@@ -272,6 +275,10 @@ export default {
     border-bottom: 1px solid #F0F0F0;
     border-radius: 0;
     z-index: 1;
+    /deep/ span {
+        vertical-align: middle;
+        font-size: 12px;
+    }
 }
 .btn:hover, .btn:active, .btn:focus {
     border-top: 1px solid #F0F0F0;

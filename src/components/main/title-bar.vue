@@ -26,7 +26,7 @@ export default {
     color: #ffffff;
     white-space: nowrap;
     i {
-        margin-top: -4px;
+        margin-top: -5px;
         vertical-align: middle;
     }
     h2 {

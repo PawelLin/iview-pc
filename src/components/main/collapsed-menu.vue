@@ -55,7 +55,7 @@ export default {
 }
 .drop-menu-a {
     display: block;
-    padding: 16px 24px 15px;
+    padding: 13px 24px 15px;
     color: #ffffff;
     /deep/ .ivu-icon {
         margin-top: -4px;

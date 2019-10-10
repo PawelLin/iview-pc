@@ -3,7 +3,7 @@
         <h2>IVIEW业务管理系统</h2>
         <Dropdown @on-click="handleClick">
             <a href="javascript:;" style="color: #515a6e;">
-                <Icon style="margin-top:-2px;" type="ios-contact" size="22"/>
+                <Icon style="vertical-align: middle;" type="ios-contact" size="22"/>
                 <span class="text">{{userName}}</span>
                 <Icon type="md-arrow-dropdown" size="14"/>
             </a>
@@ -36,7 +36,7 @@ export default {
     methods: {
         updatePwd () {
             showUpdatePwd({
-                callback(reslut) {
+                callback (reslut) {
                     this.$Message.success('修改密码成功')
                 }
             })

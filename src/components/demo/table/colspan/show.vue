@@ -1,5 +1,5 @@
 <template>
-    <div class="ivu-table-wrapper self-table-show">
+    <div class="ivu-table-wrapper ivu-table-wrapper-with-border self-table-show">
         <table cellspacing="0" cellpadding="0" class="ivu-table ivu-table-small ivu-table-border">
             <tr v-for="(item, index) in keys" :key="item.key">
                 <template v-for="(ite, inde) in item">

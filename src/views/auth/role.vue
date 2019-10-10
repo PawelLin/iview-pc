@@ -35,14 +35,14 @@
                         </Col>
                         <Col span="12">
                             <div class="ivu-form-item-required">
-                                <p class="ivu-form-item-label" style="font-size: 12px">
+                                <p class="ivu-form-item-label">
                                     授权资源列表
                                     <transition name="opacity">
                                         <span v-show="treeEmpty" style="color: #ed4014">请选择</span>
                                     </transition>
                                 </p>
                             </div>
-                            <Tree class="tree" :class="{'tree-empty': treeEmpty}" ref="tree" :data="resourceList" @on-check-change="checkChange" show-checkbox v-maxheight="240"></Tree>
+                            <Tree class="tree" :class="{'tree-empty': treeEmpty}" ref="tree" :data="resourceList" @on-check-change="checkChange" show-checkbox v-maxheight="250"></Tree>
                         </Col>
                     </Row>
                 </Card>

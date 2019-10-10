@@ -32,7 +32,8 @@ const config = {
                     route: '/mock'
                 }))
             }
-        }
+        },
+        disableHostCheck: true
     }
 }
 

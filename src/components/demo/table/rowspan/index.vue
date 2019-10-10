@@ -1,5 +1,5 @@
 <template>
-    <div class="ivu-table-wrapper self-table-list">
+    <div class="ivu-table-wrapper ivu-table-wrapper-with-border self-table-list">
         <table cellspacing="0" cellpadding="0" class="ivu-table ivu-table-small ivu-table-border" style="width: 100%">
             <tr>
                 <th>数据项key</th>
