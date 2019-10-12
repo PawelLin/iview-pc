@@ -4,13 +4,18 @@
             <div v-show="show" class="ivu-modal-mask" @click.self="handleHide"></div>
         </transition>
         <transition name="ease-in">
-            <img @load="handleLoaded" v-show="show" class="image" :src="src" style="transform: translate(-50%, -50%) scale(1, 1.5);" alt="" v-move="{ limit: true }">
+            <img v-if="type === 'image'" @load="handleLoaded" v-show="show" class="media" :src="src" style="transform: translate(-50%, -50%) scale(1);" v-move="{ limit: true }">
+            <Video v-else @load="handleLoaded" v-show="show" class="media" :src="src" style="transform: translate(-50%, -50%) scale(1);"/>
         </transition>
     </div>
 </template>
 
 <script>
+import Video from './video.vue'
 export default {
+    components: {
+        Video
+    },
     props: {
         src: {
             type: [Object, String],
@@ -18,7 +23,7 @@ export default {
         },
         type: {
             type: String,
-            // required: true
+            required: true
         },
         rotate: {
             type: Boolean,
@@ -53,8 +58,9 @@ export default {
 <style lang="less" scoped>
 .screen-preview {
     user-select: none;
-    .image{
+    .media{
         position: absolute;
+        width: 400px;
         top: 50%;
         left: 50%;
         z-index: 1001;
@@ -68,10 +74,10 @@ export default {
 }
 @keyframes ease-in {
     0% {
-        transform: translate(-50%, -50%) scale(0.9, 1.35);
+        transform: translate(-50%, -50%) scale(0.9);
     }
     100% {
-        transform: translate(-50%, -50%) scale(1, 1.5);
+        transform: translate(-50%, -50%) scale(1);
     }
 }
 </style>
