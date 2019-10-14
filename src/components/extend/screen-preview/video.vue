@@ -1,14 +1,18 @@
 <template>
     <div class="video">
-        <video ref="video" @loadstart="loadstart" @loadeddata="loadeddata" src="@/assets/test.mp4" controls></video>
+        <video ref="video" @loadstart="loadstart" @loadeddata="loadeddata" src="@/assets/test.mp4"></video>
         <div class="operation">
             <div class="button-bar">
                 <Icon @click="handlePlay" class="play" :type="play ? 'ios-pause' : 'ios-play'" size="18" />
                 <span class="time">{{show.currentTime}} / {{show.duration}}</span>
-                <div class="volume">
-                    <Icon type="md-volume-up" size="18" />
-                </div>
-                <Icon class="screen" type="md-expand" size="18" />
+                    <div class="volume" @mouseover="volumnMouseover" @mouseleave="volumnMouseleave" :style="volumeStyle">
+                        <transition name="slide-progress">
+                            <Progress v-show="volumeShow" :moved.sync="volumeMoved" :top="16" @progressMousedown="volumeChange" @progressMousemove="volumeChange" @progressMouseup="volumnMouseup" loaded-color="rgba(255, 255, 255, 0.6)" class="progress" />
+                        </transition>
+                        <Icon @click="volumeClick" class="volume-icon" :type="volumeMoved ? 'md-volume-up' : 'md-volume-off'" size="18" />
+                    </div>
+                </transition>
+                <Icon @mouseover="changeVolumeShow(true)" @mouseleave="changeVolumeShow(false)" class="screen" type="md-expand" size="18" />
             </div>
             <Progress :moved.sync="moved" :left="16" @progressMousedown="progressMousedown" @progressMousemove="progressMousemove" @progressMouseup="progressMouseup" class="progress" />
         </div>
@@ -36,10 +40,14 @@ export default {
     data () {
         return {
             moved: 0,
+            volumeMoved: 1,
+            volumeShow: false,
+            volumeStyle: {},
+            volumeMoving: false,
             play: false,
             show: {
-                currentTime: '00:00',
-                duration: '00:00'
+                currentTime: '0:00',
+                duration: '0:00'
             },
             time: {
                 currentTime: 0,
@@ -55,7 +63,7 @@ export default {
     },
     beforeCreate () {
         this.preIsPlay = ''
-        this.volumeMove = false
+        this.preVolumeMoved = 1
     },
     mounted () {
         this.video = this.$refs.video
@@ -81,6 +89,27 @@ export default {
         handlePlay () {
             this.play = !this.play
         },
+        volumeClick () {
+            if (this.volumeMoved) this.preVolumeMoved = this.volumeMoved
+            this.video.volume = this.volumeMoved = this.volumeMoved ? 0 : this.preVolumeMoved
+        },
+        volumeChange (moved) {
+            this.video.volume = moved
+        },
+        volumnMouseup () {
+            console.log(123)
+        },
+        volumnMouseover () {
+            this.volumeStyle = { width: '112px', background: 'rgba(25, 30, 31, 0.8)' }
+            this.volumeShow = true
+        },
+        volumnMouseleave () {
+            this.volumeStyle = { width: '50px', background: 'transparent' }
+            this.volumeShow = false
+        },
+        changeVolumeShow (show) {
+            this.volumeShow = show
+        },
         progressMousedown (moved) {
             this.preIsPlay = this.play
             this.play = false
@@ -101,7 +130,6 @@ export default {
         },
         timeFormat (time) {
             let minute = Math.floor(time / 60).toString()
-            minute = minute.length === 1 ? `0${minute}` : minute
             let second = Math.floor(time % 60).toString()
             second = second.length === 1 ? `0${second}` : second
             return `${minute}:${second}`
@@ -118,7 +146,7 @@ export default {
     }
     .operation {
         position: absolute;
-        bottom: 200px;
+        bottom: 5px;
         left: 0;
         width: 100%;
         background: linear-gradient(0deg, black, transparent);
@@ -135,12 +163,71 @@ export default {
                 margin-left: 14.1px;
                 font-size: 15px;
             }
+            .volume {
+                position: relative;
+                display: flex;
+                align-items: center;
+                padding: 0 36px 0 15px;
+                width: 50px;
+                height: 36px;
+                border-radius: 20px;
+                background: transparent;
+                transition: all .3s linear;
+                > .progress {
+                    position: absolute;
+                    right: 44px;
+                    padding: 16px 0;
+                    width: 53px;
+                }
+                &-icon {
+                    position: absolute;
+                    right: 0;
+                    flex: 1;
+                    padding: 9px 11px 9px 14px;
+                    cursor: pointer;
+                }
+                .slide-progress-enter-active {
+                    animation: bounce-in .3s linear;
+                }
+                .slide-progress-leave-active {
+                    animation: bounce-out .3s linear;
+                }
+                @keyframes bounce-in {
+                    0% {
+                        right: 30px;
+                        width: 13px;
+                    }
+                    50% {
+                        right: 44px;
+                        width: 33px;
+                    }
+                    100% {
+                        right: 44px;
+                        width: 53px;
+                    }
+                }
+                @keyframes bounce-out {
+                    0% {
+                        right: 44px;
+                        width: 53px;
+                    }
+                    50% {
+                        right: 44px;
+                        width: 13px;
+                    }
+                    100% {
+                        right: 30px;
+                        width: 13px;
+                    }
+                }
+            }
             .screen {
                 margin-right: 47px;
-                margin-left: 30px;
+                margin-left: 18px;
             }
         }
-        .progress {
+        > .progress {
+            margin-top: 10px;
             padding-bottom: 20px;
         }
     }

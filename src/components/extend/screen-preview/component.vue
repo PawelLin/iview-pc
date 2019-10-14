@@ -5,7 +5,7 @@
         </transition>
         <transition name="ease-in">
             <img v-if="type === 'image'" @load="handleLoaded" v-show="show" class="media" :src="src" style="transform: translate(-50%, -50%) scale(1);" v-move="{ limit: true }">
-            <Video v-else @load="handleLoaded" v-show="show" class="media" :src="src" style="transform: translate(-50%, -50%) scale(1);"/>
+            <Video v-else @load="handleLoaded" v-show="show" class="media" :src="src" style="transform: translate(-50%, -50%) scale(1);" v-move="{ limit: true }"/>
         </transition>
     </div>
 </template>

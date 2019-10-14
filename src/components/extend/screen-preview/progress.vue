@@ -1,7 +1,7 @@
 <template>
     <div :style="progressStyle" class="progress" @mousedown.stop="progressMousedown" @mouseover="changeProgressPointShow(true)" @mouseleave="changeProgressPointShow(false)">
         <div ref="progressBar" class="progress-bar">
-            <div :style="{ width: `${moved * 100}%` }" class="progress-loaded"></div>
+            <div :style="progressLoadedStyle" class="progress-loaded"></div>
         </div>
         <div class="progress-move" :style="progressMoveStyle">
             <transition name="fade">
@@ -23,6 +23,14 @@ export default {
         left: {
             type: Number,
             default: 0
+        },
+        top: {
+            type: Number,
+            default: 0
+        },
+        loadedColor: {
+            type: String,
+            default: '#ffffff'
         }
     },
     inject: ['video'],
@@ -35,8 +43,11 @@ export default {
         progressStyle () {
             return { paddingLeft: `${this.left}px`, paddingRight: `${this.left}px` }
         },
+        progressLoadedStyle () {
+            return { width: `${this.moved * 100}%`, background: this.loadedColor }
+        },
         progressMoveStyle () {
-            return { left: `${this.left}px`, right: `${this.left + 12}px` }
+            return { left: `${this.left}px`, right: `${this.left + 12}px`, top: `${this.top}px` }
         }
     },
     beforeCreate () {
@@ -98,7 +109,6 @@ export default {
 <style lang="less" scoped>
 .progress {
     position: relative;
-    margin-top: 13px;
     cursor: pointer;
     &-bar {
         position: relative;
@@ -107,7 +117,7 @@ export default {
         border-radius: 5px;
         background-color: rgba(255, 255, 255, .3);
         > .progress-loaded {
-            width: 100%;
+            width: 0%;
             height: 100%;
             border-radius: 5px;
             background-color: #ffffff;
