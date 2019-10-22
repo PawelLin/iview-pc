@@ -1,5 +1,5 @@
 <template>
-    <div :style="progressStyle" class="progress" @mousedown.stop="progressMousedown" @mouseover="changeProgressPointShow(true)" @mouseleave="changeProgressPointShow(false)">
+    <div ref="progress" :style="progressStyle" class="progress" @mousedown.stop="progressMousedown" @mouseover="changeProgressPointShow(true)" @mouseleave="changeProgressPointShow(false)">
         <div ref="progressBar" class="progress-bar">
             <div :style="progressLoadedStyle" class="progress-loaded"></div>
         </div>
@@ -31,6 +31,10 @@ export default {
         loadedColor: {
             type: String,
             default: '#ffffff'
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     inject: ['video'],
@@ -66,6 +70,7 @@ export default {
     },
     methods: {
         progressMousedown (e) {
+            if (this.disabled) return
             this.progress.move = true
             const { left: videoLeft } = this.video.$refs.video.getBoundingClientRect()
             const { left: barLeft, width: barWidth } = this.$refs.progressBar.getBoundingClientRect()
@@ -81,6 +86,7 @@ export default {
             this.$emit('progressMousedown', moved)
         },
         progressMousemove (e) {
+            if (this.disabled) return
             if (!this.progress.move) return
             this.progressPointShow = true
             const { minLeft, barWidth, pointWidth } = this.progress
@@ -90,11 +96,13 @@ export default {
             this.$emit('progressMousemove', moved)
         },
         progressMouseup (e) {
-            this.progressPointShow = e.target.className.indexOf('progress') !== -1
+            if (this.disabled) return
+            this.progressPointShow = this.$refs.progress.contains(e.target)
             this.progress.move = false
             this.$emit('progressMouseup', e)
         },
         changeProgressPointShow (show) {
+            if (this.disabled) return
             if (this.progress.move) return
             this.progressPointShow = show
         }

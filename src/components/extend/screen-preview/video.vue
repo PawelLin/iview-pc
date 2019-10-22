@@ -1,26 +1,26 @@
 <template>
     <div class="video">
         <video ref="video" @loadstart="loadstart" @loadeddata="loadeddata" src="@/assets/test.mp4"></video>
-        <div class="operation">
+        <div class="operation" @mousedown.native.stop>
             <div class="button-bar">
-                <Icon @click="handlePlay" class="play" :type="play ? 'ios-pause' : 'ios-play'" size="18" />
+                <Icon ref="play" @click="handlePlay" class="play" :type="play ? 'ios-pause' : 'ios-play'" size="18" />
                 <span class="time">{{show.currentTime}} / {{show.duration}}</span>
-                    <div class="volume" @mouseover="volumnMouseover" @mouseleave="volumnMouseleave" :style="volumeStyle">
+                    <div ref="volume" class="volume" @mouseover="volumeMouseover" @mouseleave="volumeMouseleave" :style="volumeStyle">
                         <transition name="slide-progress">
-                            <Progress v-show="volumeShow" :moved.sync="volumeMoved" :top="16" @progressMousedown="volumeChange" @progressMousemove="volumeChange" @progressMouseup="volumnMouseup" loaded-color="rgba(255, 255, 255, 0.6)" class="progress" />
+                            <Progress v-show="volumeShow" :moved.sync="volumeMoved" :top="16" :disabled="disabled === 'progress'" @progressMousedown="volumeMousedown" @progressMousemove="volumeMousemove" @progressMouseup="volumeMouseup" loaded-color="rgba(255, 255, 255, 0.6)" class="progress" />
                         </transition>
-                        <Icon @click="volumeClick" class="volume-icon" :type="volumeMoved ? 'md-volume-up' : 'md-volume-off'" size="18" />
+                        <Icon ref="volumeIcon" @click="volumeClick" class="volume-icon" :type="volumeMoved ? 'md-volume-up' : 'md-volume-off'" size="18" />
                     </div>
                 </transition>
                 <Icon @mouseover="changeVolumeShow(true)" @mouseleave="changeVolumeShow(false)" class="screen" type="md-expand" size="18" />
             </div>
-            <Progress :moved.sync="moved" :left="16" @progressMousedown="progressMousedown" @progressMousemove="progressMousemove" @progressMouseup="progressMouseup" class="progress" />
+            <Progress :moved.sync="moved" :left="16" :disabled="disabled === 'volume'" @progressMousedown="progressMousedown" @progressMousemove="progressMousemove" @progressMouseup="progressMouseup" class="progress" />
         </div>
     </div>
 </template>
 
 <script>
-import { on, off } from '@/libs/tools'
+import { on } from '@/libs/tools'
 import Progress from './progress.vue'
 export default {
     components: {
@@ -52,7 +52,8 @@ export default {
             time: {
                 currentTime: 0,
                 duration: 0
-            }
+            },
+            disabled: '' // volume progress
         }
     },
     watch: {
@@ -64,6 +65,7 @@ export default {
     beforeCreate () {
         this.preIsPlay = ''
         this.preVolumeMoved = 1
+        this.volumeMoving = false
     },
     mounted () {
         this.video = this.$refs.video
@@ -93,24 +95,36 @@ export default {
             if (this.volumeMoved) this.preVolumeMoved = this.volumeMoved
             this.video.volume = this.volumeMoved = this.volumeMoved ? 0 : this.preVolumeMoved
         },
-        volumeChange (moved) {
+        volumeMousedown (moved) {
+            this.disabled = 'volume'
             this.video.volume = moved
         },
-        volumnMouseup () {
-            console.log(123)
+        volumeMousemove (moved) {
+            this.volumeMousedown(moved)
+            this.volumeMoving = true
         },
-        volumnMouseover () {
+        volumeMouseup (e) {
+            this.disabled = ''
+            this.volumeMoving = false
+            if (!this.$refs.volume.contains(e.target)) {
+                this.volumeMouseleave()
+            }
+        },
+        volumeMouseover () {
+            if (this.disabled === 'progress') return
             this.volumeStyle = { width: '112px', background: 'rgba(25, 30, 31, 0.8)' }
             this.volumeShow = true
         },
-        volumnMouseleave () {
-            this.volumeStyle = { width: '50px', background: 'transparent' }
+        volumeMouseleave () {
+            if (this.volumeMoving) return
+            this.volumeStyle = { width: '43px', background: 'transparent' }
             this.volumeShow = false
         },
         changeVolumeShow (show) {
             this.volumeShow = show
         },
         progressMousedown (moved) {
+            this.disabled = 'progress'
             this.preIsPlay = this.play
             this.play = false
             this.timeSet(moved)
@@ -119,7 +133,13 @@ export default {
             this.timeSet(moved)
         },
         progressMouseup (e) {
-            if (e.target.className.indexOf('play') === -1 && this.preIsPlay !== '') {
+            if (this.$refs.volumeIcon.$el.contains(e.target)) {
+                this.disabled = 'volumne'
+                this.volumeMouseover()
+            } else {
+                this.disabled = ''
+            }
+            if (!this.$refs.play.$el.contains(e.target) && this.preIsPlay !== '') {
                 this.play = this.preIsPlay
                 this.preIsPlay = ''
             }
@@ -167,7 +187,6 @@ export default {
                 position: relative;
                 display: flex;
                 align-items: center;
-                padding: 0 36px 0 15px;
                 width: 50px;
                 height: 36px;
                 border-radius: 20px;

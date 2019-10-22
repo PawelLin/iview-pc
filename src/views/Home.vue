@@ -39,10 +39,10 @@ export default {
         Start
     },
     created () {
-        showScreenPreview({
-            type: 'video',
-            src: 'src'
-        })
+        // showScreenPreview({
+        //     type: 'video',
+        //     src: 'src'
+        // })
     },
     methods: {
         load () {
