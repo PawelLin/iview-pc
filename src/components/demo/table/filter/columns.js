@@ -55,7 +55,23 @@ export default [
         children: [
             {
                 title: 'C0',
-                key: 'C0'
+                key: 'C0',
+                children: [
+                    {
+                        title: 'C00',
+                        key: 'C00'
+                    },
+                    {
+                        title: 'C01',
+                        key: 'C01',
+                        needkey: 'C0'
+                    },
+                    {
+                        title: 'C02',
+                        key: 'C02',
+                        needkey: 'C0'
+                    }
+                ]
             },
             {
                 title: 'C1',

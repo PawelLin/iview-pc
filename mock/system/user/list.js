@@ -6,7 +6,7 @@ next(null, {
             loginName: 'admin',
             realName: '系统管理员',
             roleName: "管理员",
-            orgName: "江苏紫金农村商业银行管理机构",
+            orgName: "管理机构",
             mobile: "13333333333",
             status: "0"
         },
@@ -15,7 +15,7 @@ next(null, {
             loginName: 'operator',
             realName: '系统操作员',
             roleName: "操作员",
-            orgName: "江苏紫金农村商业银行管理机构",
+            orgName: "管理机构",
             mobile: "13333333333",
             status: "2"
         },
@@ -24,7 +24,7 @@ next(null, {
             loginName: 'test',
             realName: '系统测试员',
             roleName: "测试员",
-            orgName: "江苏紫金农村商业银行管理机构",
+            orgName: "管理机构",
             mobile: "13333333333",
             status: "1"
         }
