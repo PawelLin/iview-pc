@@ -20,6 +20,7 @@ setTimeout(
                     { id: 99939, parentId: 9993, title: '各种表格', icon: 'ios-grid-outline', name: 'demo_table' },
                     { id: 99930, parentId: 9993, title: '高阶组件', icon: 'ios-grid-outline', name: 'demo_hoc' },
                     { id: 9994, parentId: 0, title: '迭代日志', icon: 'ios-bookmark-outline', name: 'demo_logs' },
+                    { id: 9995, parentId: 0, title: '按钮权限', icon: 'md-square-outline', name: 'demo_buttons' },
                 ],
                 buttonList: ['example_tag', 'user_add']
             }

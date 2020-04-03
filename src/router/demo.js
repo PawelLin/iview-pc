@@ -62,5 +62,10 @@ export default [
         path: '/demo/hoc',
         name: 'demo_hoc',
         component: () => import('_c/demo/hoc.vue')
+    },
+    {
+        path: '/demo/buttons',
+        name: 'demo_buttons',
+        component: () => import('_c/demo/buttons.vue')
     }
 ]

@@ -35,7 +35,7 @@ export default {
                 { title: '备注', slot: 'remark' }
             ],
             list: [
-                { name: 'v-money', note: '限制input只能输入金额格式的数字', use: 'v-money = " [ num1, num2 ] "' },
+                { name: 'v-money', note: '限制input只能输入金额格式的数字', use: 'v-money = " [ num1, num2, hasMax ] "' },
                 { name: 'v-number', note: '限制input只能输入数字或regex限定的字符', use: 'v-number = " regex "' },
                 { name: 'v-thousands', note: '限制input只能输入数字和逗号，失去焦点自动格式化千分位', use: 'v-thousands = " \'number\' "' },
                 { name: 'v-thousands-auto', note: '限制input只能输入数字，边输入边格式化千分位', use: 'v-thousands-auto = " \'number\' "' },
