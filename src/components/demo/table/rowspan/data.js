@@ -1,103 +1,103 @@
 export default [
     {
-        key: 'x',
-        name: '数据项1',
-        description: 'xxx',
-        expersion: '#a#+#b#',
+        a: 'a1',
+        b: 'b1',
+        c: 'c1',
+        abc: 'a1 + b1 + c1',
         list: [
             {
-                key: 'a',
-                name: '清单项1',
-                description: 'xxx',
-                source: '征信数据',
+                e: 'e1',
+                f: 'f1',
+                g: 'g1',
+                h: 'h1',
                 list: [
                     {
-                        model: 'HTML导入',
-                        explain: '取2年内汇总'
+                        i: 'i1',
+                        j: 'j1'
                     },
                     {
-                        model: '明细录入',
-                        explain: ''
+                        i: 'i1',
+                        j: 'j1'
                     },
                     {
-                        model: '密文导入',
-                        explain: ''
+                        i: 'i1',
+                        j: 'j1'
                     },
                     {
-                        model: '汇总录入',
-                        explain: ''
+                        i: 'i1',
+                        j: 'j1'
                     }
                 ]
             },
             {
-                key: 'b',
-                name: '清单项2',
-                description: 'xxx',
-                source: '行内数据',
+                e: 'e11',
+                f: 'f11',
+                g: 'g11',
+                h: 'h11',
                 list: [
                     {
-                        model: '壶关',
-                        explain: ''
+                        i: 'i11',
+                        j: 'j11'
                     },
                     {
-                        model: '朝阳',
-                        explain: ''
+                        i: 'i11',
+                        j: 'j11'
                     }
                 ]
             }
         ]
     },
     {
-        key: 'y',
-        name: '数据项2',
-        description: 'xxx',
-        expersion: '#c#+#d#',
+        a: 'a2',
+        b: 'b2',
+        c: 'c2',
+        abc: 'a2 + b2 + c2',
         list: [
             {
-                key: 'c',
-                name: '清单项3',
-                description: 'xxx',
-                source: '征信数据',
+                e: 'e2',
+                f: 'f2',
+                g: 'g2',
+                h: 'h2',
                 list: [
                     {
-                        model: 'HTML导入',
-                        explain: '取2年内汇总'
+                        i: 'i2',
+                        j: 'j2'
                     },
                     {
-                        model: '明细录入',
-                        explain: ''
+                        i: 'i2',
+                        j: 'j2'
                     },
                     {
-                        model: '密文导入',
-                        explain: ''
+                        i: 'i2',
+                        j: 'j2'
                     },
                     {
-                        model: '汇总录入',
-                        explain: ''
+                        i: 'i2',
+                        j: 'j2'
                     }
                 ]
             },
             {
-                key: 'd',
-                name: '清单项4',
-                description: 'xxx',
-                source: '征信数据',
+                e: 'e22',
+                f: 'f22',
+                g: 'g22',
+                h: 'h22',
                 list: [
                     {
-                        model: 'HTML导入',
-                        explain: '取2年内汇总'
+                        i: 'i22',
+                        j: 'j22'
                     },
                     {
-                        model: '明细录入',
-                        explain: ''
+                        i: 'i22',
+                        j: 'j22'
                     },
                     {
-                        model: '密文导入',
-                        explain: ''
+                        i: 'i22',
+                        j: 'j22'
                     },
                     {
-                        model: '汇总录入',
-                        explain: ''
+                        i: 'i22',
+                        j: 'j22'
                     }
                 ]
             }

@@ -12,28 +12,28 @@
         <div class="ivu-table-wrapper self-table-list">
             <table cellspacing="0" cellpadding="0" class="ivu-table ivu-table-small ivu-table-border">
                 <tr>
-                    <th>数据项key</th>
-                    <th>数据项名称</th>
-                    <th>数据项描述</th>
-                    <th>表达式</th>
-                    <th>清单项key</th>
-                    <th>清单项名称</th>
-                    <th>清单项描述</th>
-                    <th>数据源</th>
-                    <th>模式</th>
-                    <th>说明</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>E</th>
+                    <th>F</th>
+                    <th>G</th>
+                    <th>H</th>
+                    <th>I</th>
+                    <th>J</th>
                 </tr>
                 <tr v-for="(item, index) in arr" :key="`tr-${index}`">
-                    <td :rowspan="item.rowspans[1]" v-if="item.parent_parent_key">{{item.parent_parent_key}}</td>
-                    <td :rowspan="item.rowspans[1]" v-if="item.parent_parent_name">{{item.parent_parent_name}}</td>
-                    <td :rowspan="item.rowspans[1]" v-if="item.parent_parent_description">{{item.parent_parent_description}}</td>
-                    <td :rowspan="item.rowspans[1]" v-if="item.parent_parent_expersion">{{item.parent_parent_expersion}}</td>
-                    <td :rowspan="item.rowspans[0]" v-if="item.parent_key">{{item.parent_key}}</td>
-                    <td :rowspan="item.rowspans[0]" v-if="item.parent_name">{{item.parent_name}}</td>
-                    <td :rowspan="item.rowspans[0]" v-if="item.parent_description">{{item.parent_description}}</td>
-                    <td :rowspan="item.rowspans[0]" v-if="item.parent_source">{{item.parent_source}}</td>
-                    <td>{{item.model}}</td>
-                    <td>{{item.explain}}</td>
+                    <td :rowspan="item.rowspans[1]" v-if="item.parent_parent_a">{{item.parent_parent_a}}</td>
+                    <td :rowspan="item.rowspans[1]" v-if="item.parent_parent_b">{{item.parent_parent_b}}</td>
+                    <td :rowspan="item.rowspans[1]" v-if="item.parent_parent_c">{{item.parent_parent_c}}</td>
+                    <td :rowspan="item.rowspans[1]" v-if="item.parent_parent_abc">{{item.parent_parent_abc}}</td>
+                    <td :rowspan="item.rowspans[0]" v-if="item.parent_e">{{item.parent_e}}</td>
+                    <td :rowspan="item.rowspans[0]" v-if="item.parent_f">{{item.parent_f}}</td>
+                    <td :rowspan="item.rowspans[0]" v-if="item.parent_g">{{item.parent_g}}</td>
+                    <td :rowspan="item.rowspans[0]" v-if="item.parent_h">{{item.parent_h}}</td>
+                    <td>{{item.i}}</td>
+                    <td>{{item.j}}</td>
                 </tr>
             </table>
         </div>

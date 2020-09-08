@@ -78,6 +78,7 @@ export default {
             if (binding.value && binding.value.limit) {
                 const initWidth = width / sizeX
                 const initHeight = height / sizeY
+                const parent = binding.value && binding.value.body && document.querySelector(binding.value.body)
                 const parentWidth = (parent && parent.offsetWidth) || window.innerWidth
                 const parentHeight = (parent && parent.offsetHeight) || window.innerHeight
                 if ((initWidth * (sizeX + zoom)) > parentWidth) {
