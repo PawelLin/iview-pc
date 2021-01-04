@@ -1,4 +1,4 @@
-import { Input } from 'iview'
+import { Input } from 'view-design'
 function NumberInput (Input) {
     return {
         props: Input.props,

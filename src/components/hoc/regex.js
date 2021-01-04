@@ -1,4 +1,4 @@
-import { Input } from 'iview'
+import { Input } from 'view-design'
 function RegexInput (Input) {
     return {
         props: Input.props,
