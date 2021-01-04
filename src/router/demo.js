@@ -57,5 +57,15 @@ export default [
         path: '/demo/table',
         name: 'demo_table',
         component: () => import('_c/demo/table/index.vue')
+    },
+    {
+        path: '/demo/hoc',
+        name: 'demo_hoc',
+        component: () => import('_c/demo/hoc.vue')
+    },
+    {
+        path: '/demo/buttons',
+        name: 'demo_buttons',
+        component: () => import('_c/demo/buttons.vue')
     }
 ]

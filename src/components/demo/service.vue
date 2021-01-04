@@ -16,7 +16,7 @@
             <Col span="12" v-show="title">
                 <Card dis-hover>
                     <p slot="title">{{title}}-响应数据</p>
-                    <div>{{content}}</div>
+                    <pre class="pre">{{content}}</pre>
                 </Card>
             </Col>
         </Row>
@@ -45,7 +45,7 @@ export default {
         },
         getOrgList () {
             getOrgList().then(res => {
-                this.content = res.data.data
+                this.content = JSON.stringify(res.data, null, 4)
             })
         },
         downloadBlob () {
@@ -65,5 +65,8 @@ export default {
 }
 .button {
     margin-right: 10px;
+}
+.pre {
+    margin: 0;
 }
 </style>

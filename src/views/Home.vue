@@ -11,7 +11,8 @@
         <Start :nums="4" /><br>
         <Start :nums="4.5" /><br>
         <Start :nums="5" /><br>
-        <img @click="showScreenPreview" src="https://git.f-road.com.cn/uploads/-/system/user/avatar/36/avatar.png?width=400" />
+        <img @click="showImagePreview('https://cn.vuejs.org/images/logo.png')" src="https://cn.vuejs.org/images/logo.png" style="width:200px" />
+        <video @click="showVideoPreview('https://raw.githubusercontent.com/PawelLin/images/master/test.mp4')" src="https://raw.githubusercontent.com/PawelLin/images/master/test.mp4" style="width:400px;"></video>
         <img alt="Vue logo" src="../assets/logo.png">
         <div>
             <Button @click="updatePwd1">修改密码vue</Button>
@@ -38,6 +39,10 @@ export default {
         Start
     },
     created () {
+        // showScreenPreview({
+        //     type: 'video',
+        //     src: 'src'
+        // })
     },
     methods: {
         load () {
@@ -50,9 +55,16 @@ export default {
                 newWindow.close()
             })
         },
-        showScreenPreview () {
+        showImagePreview (src) {
             showScreenPreview({
-                src: 'https://git.f-road.com.cn/uploads/-/system/user/avatar/36/avatar.png'
+                type: 'image',
+                src
+            })
+        },
+        showVideoPreview (src) {
+            showScreenPreview({
+                type: 'video',
+                src
             })
         },
         updatePwd1 () {

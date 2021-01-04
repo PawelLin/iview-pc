@@ -8,11 +8,12 @@ export default {
         if (input) {
             let num1 = (binding.value && binding.value[0]) || 9
             let num2 = (binding.value && binding.value[1]) || 2
+            let hasMax = binding.value && (binding.value[2] !== true)
             let regExp = new RegExp(`^(0|[1-9]\\d{0,${num1 - 1}})(\\.\\d{0,${num2}})?$`)
             let regExp1 = new RegExp(`^9{${num1}}\\.$`)
             let value = ''
             const handleInput = e => {
-                if (e.target.value && (!(regExp.test(e.target.value)) || regExp1.test(e.target.value))) {
+                if (e.target.value && (!(regExp.test(e.target.value)) || (hasMax && regExp1.test(e.target.value)))) {
                     e.target.value = value
                 } else {
                     value = e.target.value

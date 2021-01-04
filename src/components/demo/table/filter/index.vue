@@ -38,6 +38,14 @@
                         </Select>
                     </FormItem>
                 </Col>
+                <Col  span="6" offset="12">
+                    <FormItem label="C0">
+                        <Select v-model="form.C0" multiple>
+                            <Option value="C01">C01</Option>
+                            <Option value="C02">C02</Option>
+                        </Select>
+                    </FormItem>
+                </Col>
             </Row>
         </Form>
         <Table :columns="columns" :data="list" size="small" border></Table>
@@ -54,7 +62,8 @@ export default {
                 A: '',
                 B: '',
                 C: '',
-                D: ''
+                D: '',
+                C0: ''
             },
             list: [
                 {
@@ -67,6 +76,9 @@ export default {
                     B2: 'b2',
                     B3: 'b3',
                     C0: 'c0',
+                    C00: 'c00',
+                    C01: 'c01',
+                    C02: 'c02',
                     C1: 'c1',
                     C2: 'c2',
                     C3: 'c3',

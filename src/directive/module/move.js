@@ -10,7 +10,7 @@ export default {
         let l = 0
         let t = 0
         let canMove = false
-        const parent = binding.value && binding.value.body && document.querySelector(binding.value.body)
+
         const handleMousedown = e => {
             e.preventDefault()
             /**
@@ -24,6 +24,7 @@ export default {
              * maxTop = 容器高度 - 当前水平高度 - translateY
              */
             if (binding.value && binding.value.limit) {
+                const parent = binding.value && binding.value.body && document.querySelector(binding.value.body)
                 const rect = el.getBoundingClientRect()
                 const width = Math.abs(rect.left - rect.right)
                 const height = Math.abs(rect.top - rect.bottom)
@@ -66,7 +67,7 @@ export default {
             const zoom = (e.wheelDelta > 0 || e.detail > 0) ? 0.2 : -0.2
             // const matrix = window.getComputedStyle(el).transform.match(/-?\d+(.\d+)?/g) || [1, 0, 0, 1, 0, 0]
             let transform = el.style.transform
-            let scale = transform.match(/scale\((.*\d),(.*\d)\)/) || transform.match(/scale\((.*\d)\)\s/)
+            let scale = transform.match(/scale\((.*\d),(.*\d)\)/) || transform.match(/scale\((.*\d)\)/)
             let sizeX = (scale && parseFloat(scale[1])) || 1
             let sizeY = (scale && parseFloat(scale[2])) || 1
             let sizeXY = sizeX / sizeY
@@ -77,6 +78,7 @@ export default {
             if (binding.value && binding.value.limit) {
                 const initWidth = width / sizeX
                 const initHeight = height / sizeY
+                const parent = binding.value && binding.value.body && document.querySelector(binding.value.body)
                 const parentWidth = (parent && parent.offsetWidth) || window.innerWidth
                 const parentHeight = (parent && parent.offsetHeight) || window.innerHeight
                 if ((initWidth * (sizeX + zoom)) > parentWidth) {

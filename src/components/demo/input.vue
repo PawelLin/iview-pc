@@ -1,7 +1,7 @@
 <template>
     <Row>
         <Col span="14">
-            <Form :label-width="110" inline>
+            <Form :label-width="130" inline>
                 <Row>
                     <Col>
                         <FormItem label="文本输入框">
@@ -18,7 +18,13 @@
                         <FormItem label="金额输入框">
                             <Input v-model="form.money" v-money="[9, 2]" />
                         </FormItem>
-                        <span class="desc">指令：v-money = " [ num1, num2 ] "</span>
+                        <span class="desc">指令：v-money = " [ 9, 2 ] "</span>
+                    </Col>
+                    <Col>
+                        <FormItem label="金额(含最大值)输入框">
+                            <Input v-model="form.moneyMax" v-money="[9, 2, true]" />
+                        </FormItem>
+                        <span class="desc">指令：v-money = " [ 9, 2, true ] "</span>
                     </Col>
                     <Col>
                         <FormItem label="千分位输入框">
@@ -81,6 +87,7 @@
             <p>form.text = {{form.text}}</p>
             <p>form.number = {{form.number}}</p>
             <p>form.money = {{form.money}}</p>
+            <p>form.moneyMax = {{form.moneyMax}}</p>
             <p>form.thousands = {{form.thousands}}</p>
             <p>form.thousandsNum = {{form.thousandsNum}}</p>
             <p>form.thousandsAuto = {{form.thousandsAuto}}</p>
@@ -105,6 +112,7 @@ export default {
                 text: '',
                 number: '0',
                 money: '0',
+                moneyMax: '0',
                 thousands: '0',
                 thousandsNum: '0',
                 thousandsAuto: '0123456',
