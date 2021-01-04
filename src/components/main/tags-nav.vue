@@ -83,7 +83,7 @@ export default {
                 if (!this.tagMap) {
                     this.setTagMap(item)
                     // 如果直接访问的页面不在标签栏中，跳到homeName页
-                    if (!this.tagList.find(item => !objNotEqual(item, this.$route, ['name', 'query'])) && this.$route.name !== this.home.name) {
+                    if (!this.tagList.find(item => !objNotEqual(item, this.$route, this.iframeFilter(['name', 'query']))) && this.$route.name !== this.home.name) {
                         this.$router.replace({ name: this.home.name })
                         return
                     }
@@ -111,6 +111,13 @@ export default {
             'delData'
         ]),
         toPage (item) {
+            if (!item.name) {
+                this.$router.push({
+                    path: item.path,
+                    query: item.query
+                })
+                return
+            }
             this.$router.push({
                 name: item.name,
                 query: item.query,
@@ -126,12 +133,13 @@ export default {
         setActiveTag (item) {
             // this.tagMap[item.name]有值说明是左侧菜单，只需要判断路由name
             let filter = this.tagFilter((this.tagMap && this.tagMap[item.name]) ? ['name'] : ['name', 'query'])
-            return !objNotEqual(item, this.$route, filter) ? 'primary' : 'default'
+            return !objNotEqual(item, this.$route, this.iframeFilter(filter)) ? 'primary' : 'default'
         },
         addTag (route) {
             if (this.tagMap) {
+                const tagMapName = this.tagMap[route.name] || this.tagMap[route.query.iframe]
                 // 映射值 | 跳转路由定义params的rename值 | 路由配置的值 | 后端未返回首页home路由, 设置的值
-                let title = this.tagMap[route.name] || route.params.rename || (this.metaRoutes[route.name] && this.metaRoutes[route.name].title) || this.home.title
+                let title = tagMapName || route.params.rename || (this.metaRoutes[route.name] && this.metaRoutes[route.name].title) || this.home.title
                 let params = {}
                 // 直接访问的页面在tag不在左侧菜单，将路由的params跟本地存储的同步
                 if (!this.tagMap[route.name]) {
@@ -141,13 +149,13 @@ export default {
                     title = (tag && tag.params && tag.params.rename) || title
                 }
                 if (title) {
-                    route = { name: route.name, title, params, query: route.query }
+                    route = { name: route.name, title, params, query: route.query, path: route.path }
                     if (this.tagList.length === 0 && this.home && route.name !== this.home.name) {
                         this.tagList.push({ name: this.home.name, title: this.tagMap[this.home.name] || this.home.title, params: {}, query: {} })
                     }
                     // this.tagMap[item.name]有值说明是左侧菜单，只需要判断路由name
                     let filter = this.tagFilter(this.tagMap[route.name] ? ['name'] : '')
-                    let tagIndex = objInArr(this.tagList, route, filter)
+                    let tagIndex = objInArr(this.tagList, route, this.iframeFilter(filter))
                     if (tagIndex === -1) {
                         this.tagList.push(route)
                         this.$nextTick(() => {
@@ -175,7 +183,7 @@ export default {
             let filter = this.tagFilter(['name', 'query', 'params'])
             let list = this.tagList.filter((item, index1) => index1 !== index)
             this.setTagList(list)
-            if (!objNotEqual(item, this.$route, filter)) {
+            if (!objNotEqual(item, this.$route, this.iframeFilter(filter))) {
                 let pre = list[index - 1]
                 this.$router.push({ name: pre.name, query: pre.query, params: pre.params })
             }
@@ -189,7 +197,7 @@ export default {
         closeOther (route = this.$route) {
             let filter = this.tagFilter(['name', 'query', 'params'])
             let list = this.tagList.filter(item => {
-                return !objNotEqual(item, route, filter) || item.name === this.home.name
+                return !objNotEqual(item, route, this.iframeFilter(filter)) || item.name === this.home.name
             })
             this.setTagList(list)
             this.left = 0
@@ -213,6 +221,9 @@ export default {
         tagFilter (filter) {
             return this.onlyName ? ['name'] : filter
         },
+        iframeFilter (filter) {
+            return filter.includes('query') ? filter : filter.concat('query')
+        },
         showContextMenu (item, e) {
             this.contextMenu.visible = false
             this.$nextTick(() => {
@@ -230,9 +241,17 @@ export default {
             this.closeAll()
         },
         closeMenuOther () {
-            let { name, query, params } = this.contextMenu.route
+            let { name, query, params, path } = this.contextMenu.route
+
             this.hideContextMenu()
             this.closeOther(this.contextMenu.route)
+            if (!name) {
+                this.$router.replace({
+                    path,
+                    query
+                })
+                return
+            }
             this.$router.replace({ name, query, params })
         }
     }

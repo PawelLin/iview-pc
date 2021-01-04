@@ -53,16 +53,16 @@ export default {
     },
     computed: {
         cacheList () {
-            return this.$store.state.tag.list.map(item => item.name).filter(item => this.cacheRoutes.includes(item))
+            return Array.from(new Set(this.$store.state.tag.list.map(item => item.name).filter(item => this.cacheRoutes.includes(item))))
         }
     },
     watch: {
         $route (route) {
-            this.activeName = route.name
+            this.activeName = this.getRouteName(route)
         }
     },
     created () {
-        this.activeName = this.$route.name
+        this.activeName = this.getRouteName(this.$route)
         this.cacheRoutes = getRoutesOfCache()
     },
     methods: {
@@ -82,6 +82,9 @@ export default {
                     this.convertData(item.children, allList)
                 }
             })
+        },
+        getRouteName (route) {
+            return route.query.iframe || route.name
         }
     },
     beforeRouteEnter (to, from, next) {

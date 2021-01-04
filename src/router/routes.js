@@ -56,6 +56,11 @@ export default [
                     beforeCloseName: 'before_close_normal'
                 }
             },
+            {
+                path: '/iframes',
+                name: 'iframes',
+                component: () => import('@/views/Iframes.vue')
+            },
             ...process.env.NODE_ENV === 'development' ? require('./demo').default : []
         ]
     },

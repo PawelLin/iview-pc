@@ -89,7 +89,7 @@ npm run build
         ├── tools  工具函数
         ├── utils  功能方法
         └── validate  验证方法
-    ├── router  路由配置
+    ├── router  路由配置 (可配置iframe)
     ├── store  Vuex配置
     └── view  页面文件
         ├── login  登录页面

@@ -1,7 +1,7 @@
 <template>
     <section>
         <Card shadow>
-            <Form :label-width="50" label-position="left">
+            <Form :label-width="60" label-position="left">
                 <Row :gutter="20">
                     <Col span="6">
                         <FormItem label="用户名">

@@ -43,6 +43,15 @@ export default {
     },
     methods: {
         toPage (name) {
+            if (name.includes('.html') || name.includes('http')) {
+                this.$router.push({
+                    name: 'iframes',
+                    query: {
+                        iframe: name
+                    }
+                })
+                return
+            }
             this.$router.push({ name })
         },
         setMenuNameMap (menus, menu) {
