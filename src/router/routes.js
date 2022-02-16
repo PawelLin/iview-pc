@@ -61,7 +61,8 @@ export default [
                 name: 'iframes',
                 component: () => import('@/views/Iframes.vue')
             },
-            ...process.env.NODE_ENV === 'development' ? require('./demo').default : []
+            // ...process.env.NODE_ENV === 'development' ? require('./demo').default : [],
+            ...require('./demo').default
         ]
     },
     {
