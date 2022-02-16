@@ -2,7 +2,7 @@
     <section class="title" :style="{ paddingRight: collapsed ? '0px' : '20px' }">
         <!-- <img src="../../assets/images/bank.png" alt="银行" width="21"> -->
         <Icon custom="iconfont icon-bank" size="21" color="white"/>
-        <h2 v-show="!collapsed">农村信用社联合社</h2>
+        <h2 v-show="!collapsed">管理系统</h2>
     </section>
 </template>
 
