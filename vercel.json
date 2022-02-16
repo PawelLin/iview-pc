@@ -1,6 +1,6 @@
 {
     "rewrites": [{
         "source": "/api/(.*)",
-        "destination": "https://vercel-api-pawellin.vercel.app/api/"
+        "destination": "https://vercel-api-pawellin.vercel.app/api"
     }]
 }
