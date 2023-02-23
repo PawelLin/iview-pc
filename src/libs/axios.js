@@ -4,6 +4,7 @@ import router from '@/router'
 import { setToken, getToken } from '@/libs/utils'
 
 Axios.defaults.baseURL = process.env.VUE_APP_BASEURL
+console.log(Axios.defaults.baseURL)
 
 // 添加请求拦截器
 Axios.interceptors.request.use(config => {

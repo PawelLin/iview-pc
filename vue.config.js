@@ -4,7 +4,7 @@ const resolve = dir => {
     return path.join(__dirname, dir)
 }
 
-const BASE_URL = process.env.NODE_ENV === 'development' ? '/' : '/'
+const BASE_URL = process.env.NODE_ENV === 'development' ? '/' : '/iview-pc'
 
 const config = {
     publicPath: BASE_URL,

@@ -12,7 +12,7 @@
         <Start :nums="4.5" /><br>
         <Start :nums="5" /><br>
         <img @click="showImagePreview('https://cn.vuejs.org/images/logo.png')" src="https://cn.vuejs.org/images/logo.png" style="width:200px" />
-        <video @click="showVideoPreview('https://raw.githubusercontent.com/PawelLin/images/master/test.mp4')" src="https://raw.githubusercontent.com/PawelLin/images/master/test.mp4" style="width:400px;"></video>
+        <video @click="showVideoPreview(mp4)" :src="mp4" style="width:400px;"></video>
         <img alt="Vue logo" src="../assets/logo.png">
         <div>
             <Button @click="updatePwd1">修改密码vue</Button>
@@ -20,7 +20,7 @@
             <Button @click="load">异步资源下载</Button>
             <Button><router-link to="/system/auth/user?aa=1">user</router-link></Button>
         </div>
-        <HelloWorld msg="Welcome to Your Vue.js App"/>
+        <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     </div>
 </template>
 
@@ -30,6 +30,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
 import showUpdatePwd1 from '_c/extend/update-pwd'
 import showUpdatePwd2 from '_c/extend/update-pwd/bak'
 import showScreenPreview from '_c/extend/screen-preview'
+import mp4 from '@/assets/test.mp4'
 import Start from '_c/start.vue'
 
 export default {
@@ -37,6 +38,11 @@ export default {
     components: {
         HelloWorld,
         Start
+    },
+    data () {
+        return {
+            mp4
+        }
     },
     created () {
         // showScreenPreview({
