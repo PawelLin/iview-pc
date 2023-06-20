@@ -32,8 +32,8 @@ export default {
     data () {
         return {
             form: {
-                loginName: '',
-                password: ''
+                loginName: 'admin',
+                password: '123456'
             },
             rules: {
                 loginName: { required: true, message: '请输入用户名' },

@@ -1,7 +1,7 @@
 <template>
     <Header class="header">
         <h2>IVIEW业务管理系统</h2>
-        <Dropdown @on-click="handleClick">
+        <Dropdown @on-click="handleClick" class="dropdown">
             <a href="javascript:;" style="color: #515a6e;">
                 <Icon style="vertical-align: middle;" type="ios-contact" size="22"/>
                 <span class="text">{{userName}}</span>
@@ -18,10 +18,22 @@
                 </DropdownItem>
             </DropdownMenu>
         </Dropdown>
+        <Poptip
+            confirm
+            title="切换标签模式将清空当前标签列表，确认切换吗？"
+            width="400"
+            placement="bottom-end"
+            @on-ok="handleTagChange">
+            <i-switch :value="tagStatus" :before-change="tagStatusBeforeChange" @on-change="tagStatusChange" class="tag-switch" size="large" false-color="#2db7f5">
+                <span slot="open">多标签</span>
+                <span slot="close">单标签</span>
+            </i-switch>
+        </Poptip>
     </Header>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import showUpdatePwd from '_c/extend/update-pwd'
 export default {
     name: 'HeaderBar',
@@ -30,10 +42,34 @@ export default {
             userName: ''
         }
     },
+    computed: {
+        tagStatus () {
+            return this.$store.state.status.tagStatus === '1'
+        }
+    },
     created () {
         this.userName = localStorage.getItem('userName')
     },
     methods: {
+        ...mapMutations([
+            'openMoreTag',
+            'closeMoreTag'
+        ]),
+        handleTagChange () {
+            this.tagResolve()
+        },
+        tagStatusBeforeChange () {
+            return new Promise(resolve => {
+                this.tagResolve = resolve
+            })
+        },
+        tagStatusChange (status) {
+            if (status) {
+                this.openMoreTag()
+            } else {
+                this.closeMoreTag()
+            }
+        },
         updatePwd () {
             showUpdatePwd({
                 callback (reslut) {
@@ -65,9 +101,19 @@ export default {
     display: flex;
     background-color: #ffffff;
     justify-content: space-between;
+    align-items: center;
     .text {
         margin-left: 5px;
         vertical-align: middle;
+    }
+}
+.dropdown {
+    margin-left: auto;
+}
+.tag-switch {
+    width: 65px;
+    &.ivu-switch-checked::after {
+        margin-left: 9px;
     }
 }
 </style>

@@ -68,8 +68,10 @@ export default {
     methods: {
         modalChange (show) {
             if (!show) {
-                document.body.removeChild(this.$el)
-                this.$destroy()
+                setTimeout(() => {
+                    document.body.removeChild(this.$el)
+                    this.$destroy()
+                }, 150)
             }
         },
         handleSubmit () {

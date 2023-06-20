@@ -1,6 +1,7 @@
 <template>
-    <div class="home text-center">
-        <Start /><br>
+    <div class="markdown-body home">
+        <README />
+        <!-- <Start /><br>
         <Start :nums="0.5" /><br>
         <Start :nums="1" /><br>
         <Start :nums="1.5" /><br>
@@ -19,7 +20,7 @@
             <Button @click="updatePwd2">修改密码js</Button>
             <Button @click="load">异步资源下载</Button>
             <Button><router-link to="/system/auth/user?aa=1">user</router-link></Button>
-        </div>
+        </div> -->
         <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     </div>
 </template>
@@ -32,12 +33,15 @@ import showUpdatePwd2 from '_c/extend/update-pwd/bak'
 import showScreenPreview from '_c/extend/screen-preview'
 import mp4 from '@/assets/test.mp4'
 import Start from '_c/start.vue'
+import README from '../../README.md'
+import 'github-markdown-css'
 
 export default {
     name: 'home',
     components: {
         HelloWorld,
-        Start
+        Start,
+        README
     },
     data () {
         return {
@@ -87,3 +91,9 @@ export default {
     }
 }
 </script>
+
+<style lang="less" scoped>
+.home {
+    padding: 0 18px;
+}
+</style>

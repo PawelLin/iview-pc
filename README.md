@@ -1,38 +1,10 @@
-<p align="center">
-    <a href="https://www.iviewui.com">
-        <img width="200" src="https://file.iviewui.com/logo-new.svg">
-    </a>
-</p>
-
 # iview-pc
-
 [![vue](https://img.shields.io/badge/vue-2.6.10-brightgreen.svg?style=flat-square)](https://github.com/vuejs/vue)
-[![iview ui](https://img.shields.io/badge/iview-3.4.2-brightgreen.svg?style=flat-square)](https://github.com/iview/iview)
-
-[在线访问](https://admin.iviewui.com/)
-
-`注：在线版本会在开发版本新小版本发布后更新到相应版本，所以如果想体验最新版本iview-admin，请clone完整项目代码到本地运行。`
-
-## Install
-```bush
-// install dependencies
-npm install
-```
-## Run
-### Development
-```bush
-npm run dev
-```
-### Production(Build)
-```bush
-npm run build
-```
-
-## 简介
-&emsp;&emsp;iview-pc是基于Vue.js，参考iView admin抽取的一套pc管理demo。
-
+[![iview ui](https://img.shields.io/badge/iview-4.0.2-brightgreen.svg?style=flat-square)](https://github.com/iview/iview)
+## 介绍
+iview-pc是基于Vue2，参考iView Admin开发的一套管理系统。
+- [在线访问](https://pawellin.github.io/iview-pc/#/login)
 ## 功能
-
 - 登录/登出
 - 组件
     - 文件上传
@@ -54,7 +26,6 @@ npm run build
     - 带参页面
 - 收缩侧边栏
 - tag标签导航
-
 ## 文件结构
 ```shell
 .
@@ -95,14 +66,16 @@ npm run build
         ├── login  登录页面
         └── system  系统模块
 ```
-
-## Links
-
-- [iView](https://github.com/iview/iview)
-- [Vue](https://github.com/vuejs/vue)
-- [Webpack](https://github.com/webpack/webpack)
-
-## 效果展示
-
-- 响应式布局首页
-![image](https://raw.githubusercontent.com/PawelLin/images/master/iview-pc/index.png)
+## Install
+```bush
+npm install
+```
+## Run
+### Development
+```bush
+npm run dev
+```
+### Production(Build)
+```bush
+npm run build
+```

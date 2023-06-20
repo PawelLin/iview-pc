@@ -20,12 +20,12 @@
                 <li @click="closeMenuAll" class="ivu-dropdown-item">关闭所有</li>
             </ul>
         </transition>
-        <Button @click="moveRight" class="btn"><Icon size="18" type="ios-arrow-forward" /></Button>
+        <Button @click="moveRight" class="btn"><Icon type="ios-arrow-forward" size="18" /></Button>
         <Dropdown transfer placement="bottom-end" class="drop-close">
-            <Button class="btn btn-close"><Icon size="18" type="ios-close-circle-outline" /></Button>
+            <Button class="btn btn-close"><Icon type="ios-arrow-down" size="18" /></Button>
             <DropdownMenu slot="list">
-                <DropdownItem @click.native="closeOther()">关闭其他</DropdownItem>
-                <DropdownItem @click.native="closeAll">关闭所有</DropdownItem>
+                <DropdownItem @click.native="closeOther()"><Icon type="md-close" size="16" /> 关闭其他</DropdownItem>
+                <DropdownItem @click.native="closeAll"><Icon type="md-close-circle" size="16" /> 关闭所有</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     </div>
@@ -57,7 +57,6 @@ export default {
             left: 0,
             disWidth: 0,
             tagMap: null,
-            onlyName: true, // tag是否只根据name来判断
             contextMenu: {
                 visible: false,
                 top: 0,
@@ -75,6 +74,9 @@ export default {
                 this.setTagList(tagList)
             }
             return this.$store.state.tag.list
+        },
+        onlyName () { // tag是否只根据name来判断
+            return this.$store.state.status.tagStatus !== '1'
         }
     },
     watch: {
@@ -100,6 +102,9 @@ export default {
             // 同步store及localstorage
             this.setTagList(item)
             localStorage.setItem('tagList', JSON.stringify(item))
+        },
+        '$store.state.status.tagStatus' () {
+            this.closeAll()
         }
     },
     created () {
@@ -192,7 +197,9 @@ export default {
             let list = this.tagList.filter(item => item.name === this.home.name)
             this.setTagList(list)
             this.left = 0
-            this.$router.push({ name: this.home.name })
+            if (this.$route.name !== this.home.name) {
+                this.$router.push({ name: this.home.name })
+            }
         },
         closeOther (route = this.$route) {
             let filter = this.tagFilter(['name', 'query', 'params'])

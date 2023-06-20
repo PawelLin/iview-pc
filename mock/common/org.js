@@ -3,11 +3,11 @@ next(null, {
     data: [
         {
             orgCode: '11',
-            orgName: "机构1",
+            orgName: '机构1'
         },
         {
             orgCode: '22',
-            orgName: "机构2",
+            orgName: '机构2'
         }
     ]
 })

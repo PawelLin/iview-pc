@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 import { getOrgList } from '@/libs/service'
 export default {
     name: 'auth_user_detail',
@@ -102,9 +101,6 @@ export default {
         this.init(this.$route.query.id)
     },
     methods: {
-        ...mapMutations([
-            'setData'
-        ]),
         init (id) {
             let ajax = [getOrgList(), this.getRole()]
             if (id) ajax.push(this.getDetail(id))

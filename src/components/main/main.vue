@@ -12,9 +12,9 @@
         <Layout>
             <header-bar />
             <tags-nav :home="home" :list="list" />
-            <Content class="content">
+            <Content class="content" :class="notFill ? 'not-fill' : null">
                 <keep-alive :include="cacheList">
-                    <router-view/>
+                    <router-view :key="fullPath" />
                 </keep-alive>
             </Content>
         </Layout>
@@ -54,6 +54,12 @@ export default {
     computed: {
         cacheList () {
             return Array.from(new Set(this.$store.state.tag.list.map(item => item.name).filter(item => this.cacheRoutes.includes(item))))
+        },
+        fullPath () {
+            return this.$route.fullPath
+        },
+        notFill () {
+            return !this.$route.meta.fill
         }
     },
     watch: {
@@ -125,8 +131,10 @@ export default {
     }
 }
 .content {
-    padding: 18px;
     overflow-y: auto;
     overflow-x: hidden;
+    &.not-fill {
+        padding: 18px;
+    }
 }
 </style>

@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
+    "github-markdown-css": "^5.2.0",
     "js-cookie": "^2.2.0",
     "view-design": "^4.0.2",
     "vue": "^2.6.10",

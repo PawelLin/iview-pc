@@ -38,17 +38,17 @@ export default {
     watch: {
         $route: {
             handler (to, from) {
-                let key1 = `${to.name}${to.query.id || ''}`
-                let key2 = `${from.name}${from.query.id || ''}`
-                if (from.name === this.$options.name) {
-                    this.setData({ [key2]: { ...this.form } })
-                }
-                if (to.query.id && !this.$store.state.data[key1]) {
-                    this.init(to.query)
-                } else {
-                    if (!to.query.id) this.$refs.form.resetFields()
-                    this.form = Object.assign(this.form, this.$store.state.data[key1] || this.initForm)
-                }
+                // let key1 = `${to.name}${to.query.id || ''}`
+                // let key2 = `${from.name}${from.query.id || ''}`
+                // if (from.name === this.$options.name) {
+                //     this.setData({ [key2]: { ...this.form } })
+                // }
+                // if (to.query.id && !this.$store.state.data[key1]) {
+                //     this.init(to.query)
+                // } else {
+                //     if (!to.query.id) this.$refs.form.resetFields()
+                //     this.form = Object.assign(this.form, this.$store.state.data[key1] || this.initForm)
+                // }
             },
             deep: true
         }
