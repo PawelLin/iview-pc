@@ -1,0 +1,6 @@
+{
+    "rewrites": [{
+        "source": "/api/:match*",
+        "destination": "https://vercel-api-pawellin.vercel.app/api/admin/:match*"
+    }]
+}
