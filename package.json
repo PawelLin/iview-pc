@@ -8,7 +8,7 @@
     "deploy": "npm run build --deploy"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.2",
     "core-js": "^2.6.5",
     "github-markdown-css": "^5.2.0",
     "js-cookie": "^2.2.0",
